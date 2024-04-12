@@ -21,6 +21,8 @@ mark_as_advanced(CMAKE_TOOLCHAIN_FILE)
 # Prefer cmake CONFIG to auto resolve dependencies.
 set(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 # Don't use customized cmake modules if vcpkg is used to resolve dependence.
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules/")
