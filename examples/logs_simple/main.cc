@@ -14,6 +14,18 @@
 #include "opentelemetry/sdk/logs/processor.h"
 #include "opentelemetry/sdk/logs/simple_log_record_processor_factory.h"
 
+#include "opentelemetry/logs/provider.h"
+#include "opentelemetry/logs/severity.h"
+#include "iloggingserver.h"
+#include <map>
+#include <string>
+#include "opentelemetry/logs/provider.h"
+#include "opentelemetry/sdk/version/version.h"
+#include "opentelemetry/trace/provider.h"
+#include <chrono>
+#include <thread>
+//#define OPENTELEMETRY_STL_VERSION 2017
+
 #ifdef BAZEL_BUILD
 #  include "examples/common/logs_foo_library/foo_library.h"
 #else
@@ -23,10 +35,12 @@
 namespace logs_api      = opentelemetry::logs;
 namespace logs_sdk      = opentelemetry::sdk::logs;
 namespace logs_exporter = opentelemetry::exporter::logs;
+namespace logs      = opentelemetry::logs;
 
 namespace trace_api      = opentelemetry::trace;
 namespace trace_sdk      = opentelemetry::sdk::trace;
 namespace trace_exporter = opentelemetry::exporter::trace;
+namespace nostd = opentelemetry::nostd;
 
 namespace
 {
@@ -67,13 +81,78 @@ void CleanupLogger()
   logs_api::Provider::SetLoggerProvider(none);
 }
 
+nostd::shared_ptr<logs::Logger> get_logger()
+{
+  auto provider = logs::Provider::GetLoggerProvider();
+  return provider->GetLogger("MR_DPC_Logger", "MR_DPC");
+}
+
+std::map<Severity, opentelemetry::logs::Severity> severityMap = 
+{
+	{None, opentelemetry::logs::Severity::kInvalid},
+	{DebugInfo, opentelemetry::logs::Severity::kDebug},
+	{DebugVerbose, opentelemetry::logs::Severity::kDebug2},
+	{Info, opentelemetry::logs::Severity::kInfo},
+	{Warning, opentelemetry::logs::Severity::kWarn},
+	{Error, opentelemetry::logs::Severity::kError},
+	{Fatal, opentelemetry::logs::Severity::kFatal},
+	{Hazard, opentelemetry::logs::Severity::kFatal4}
+};
+
+class CentralLogServer : public ICentralLogServer
+{
+	public:
+		CentralLogServer();
+
+		~CentralLogServer();
+
+		void Log(std::string message, Severity severity, CoreLogData coreLogData);
+		void Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData);
+		void Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData);
+};
+
+CentralLogServer::CentralLogServer()
+{
+	InitLogger();
+	InitTracer();
+}
+
+CentralLogServer::~CentralLogServer()
+{
+	CleanupTracer();
+	CleanupLogger();
+}
+
+void CentralLogServer::Log(std::string message, Severity severity, CoreLogData coreLogData)
+{
+	auto logger = get_logger();
+	opentelemetry::logs::Severity otelSeverity;
+	if(severityMap.find(severity) != severityMap.end())
+		otelSeverity = severityMap[severity];
+	else
+		otelSeverity = opentelemetry::logs::Severity::kInvalid;
+	
+	logger->Log(otelSeverity, message + " " + coreLogData.Resolution);
+}
+
+void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
+{
+	foo_library();
+}
+
+void CentralLogServer::Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData)
+{
+	foo_library();
+}
+
 }  // namespace
 
 int main()
 {
-  InitTracer();
-  InitLogger();
-  foo_library();
-  CleanupTracer();
-  CleanupLogger();
+  auto centralLogServer = new CentralLogServer;
+  CoreLogData coreLogData;
+  coreLogData.Resolution = "Example core log data";
+  
+  centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
+  centralLogServer->Log("HELLO", Fatal, coreLogData);
 }
