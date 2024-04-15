@@ -9,6 +9,7 @@
 #include "opentelemetry/sdk_config.h"
 
 #include <iostream>
+#include <string>
 #include <mutex>
 #include <type_traits>
 
@@ -70,14 +71,12 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
 
     // Print out each field of the log record, noting that severity is separated
     // into severity_num and severity_text
-    sout_ << "{\n"
-          << "  timestamp          : " << log_record->GetTimestamp().time_since_epoch().count()
-          << "\n"
-          << "  observed_timestamp : "
-          << log_record->GetObservedTimestamp().time_since_epoch().count() << "\n"
-          << "  severity_num       : " << static_cast<std::uint32_t>(log_record->GetSeverity())
-          << "\n"
-          << "  severity_text      : ";
+
+    std::string logRecord = "MR_OTEL_ConsoleLog{ ";
+          logRecord.append("  timestamp          : " + std::to_string(log_record->GetTimestamp().time_since_epoch().count()) + ", ");
+          logRecord.append("  observed_timestamp : " + std::to_string(log_record->GetObservedTimestamp().time_since_epoch().count()) + ", ");
+          logRecord.append("  severity_num       : " + static_cast<std::string>(log_record->GetSeverity()));
+          logRecord.append("  severity_text      : ");
 
     std::uint32_t severity_index = static_cast<std::uint32_t>(log_record->GetSeverity());
     if (severity_index >= std::extent<decltype(opentelemetry::logs::SeverityNumToText)>::value)
@@ -86,33 +85,32 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
     }
     else
     {
-      sout_ << opentelemetry::logs::SeverityNumToText[severity_index] << "\n";
+      logRecord.append(opentelemetry::logs::SeverityNumToText[severity_index] + ", ");
     }
 
-    sout_ << "  body               : ";
-    opentelemetry::exporter::ostream_common::print_value(log_record->GetBody(), sout_);
-    sout_ << "\n  resource           : ";
-    printAttributes(log_record->GetResource().GetAttributes(), "\n    ");
+    logRecord.append("  body               : " + static_cast<std::string>(log_record->GetBody()) + ", ");
+    //opentelemetry::exporter::ostream_common::print_value(log_record->GetBody(), sout_);
+    logRecord.append("  resource           : " + printAttributes(log_record->GetResource().GetAttributes()) + ", ");
+    //printAttributes(log_record->GetResource().GetAttributes(), logRecord);
 
-    sout_ << "\n  attributes         : ";
+    logRecord.append("  attributes         : " + printAttributes(log_record->GetAttributes()) + ", ");
 
-    printAttributes(log_record->GetAttributes(), "\n    ");
+    //printAttributes(log_record->GetAttributes(), "\n    ");
 
-    sout_ << "\n"
-          << "  event_id           : " << event_id << "\n"
-          << "  event_name         : " << log_record->GetEventName() << "\n"
-          << "  trace_id           : " << std::string(trace_id, trace_id_len) << "\n"
-          << "  span_id            : " << std::string(span_id, span_id__len) << "\n"
-          << "  trace_flags        : " << std::string(trace_flags, trace_flags_len) << "\n"
-          << "  scope              : \n"
-          << "    name             : " << log_record->GetInstrumentationScope().GetName() << "\n"
-          << "    version          : " << log_record->GetInstrumentationScope().GetVersion() << "\n"
-          << "    schema_url       : " << log_record->GetInstrumentationScope().GetSchemaURL()
-          << "\n"
-          << "    attributes       : ";
+          logRecord.append("  event_id           : " + event_id + ", ");
+          logRecord.append("  event_name         : " + log_record->GetEventName() + ", ");
+          logRecord.append("  trace_id           : " << std::string(trace_id, trace_id_len) + ", ");
+          logRecord.append("  span_id            : " << std::string(span_id, span_id__len) + ", ");
+          logRecord.append("  trace_flags        : " << std::string(trace_flags, trace_flags_len) + ", ");
+          logRecord.append("  scope              : , ");
+          logRecord.append("    name             : " << log_record->GetInstrumentationScope().GetName() + ", ");
+          logRecord.append("    version          : " << log_record->GetInstrumentationScope().GetVersion() + ", ");
+         logRecord.append("    schema_url       : " << log_record->GetInstrumentationScope().GetSchemaURL() + ", ");
+          logRecord.append("    attributes       : " + printAttributes(log_record->GetInstrumentationScope().GetAttributes()) + ", ");
+          logRecord.append("}");
 
-    printAttributes(log_record->GetInstrumentationScope().GetAttributes(), "\n      ");
-    sout_ << "\n}\n";
+    //printAttributes(log_record->GetInstrumentationScope().GetAttributes());
+    sout_ << logRecord << \n";
   }
 
   return sdk::common::ExportResult::kSuccess;
@@ -137,26 +135,30 @@ bool OStreamLogRecordExporter::isShutdown() const noexcept
   return is_shutdown_;
 }
 
-void OStreamLogRecordExporter::printAttributes(
-    const std::unordered_map<std::string, sdkcommon::OwnedAttributeValue> &map,
-    const std::string prefix)
+std::string OStreamLogRecordExporter::printAttributes(
+    const std::unordered_map<std::string, sdkcommon::OwnedAttributeValue> &map)
 {
+  std::string logRecord = "";
   for (const auto &kv : map)
   {
-    sout_ << prefix << kv.first << ": ";
-    opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
+    logRecord.append(kv.first + ": " + static_cast<std::string>(kv.second) + ", ");
+    //opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
   }
+
+  return logRecord;
 }
 
-void OStreamLogRecordExporter::printAttributes(
-    const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map,
-    const std::string prefix)
+std::string OStreamLogRecordExporter::printAttributes(
+    const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map)
 {
+  std::string logRecord = "";
   for (const auto &kv : map)
   {
-    sout_ << prefix << kv.first << ": ";
-    opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
+    logRecord.append(kv.first + ": " + static_cast<std::string>(kv.second) + ", ");
+    //opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
   }
+
+  return logRecord;
 }
 
 }  // namespace logs
