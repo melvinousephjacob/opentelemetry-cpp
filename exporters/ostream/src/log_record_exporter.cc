@@ -187,10 +187,10 @@ std::string OStreamLogRecordExporter::printAttributes(
   std::string logRecord = "";
   for (const auto &kv : map)
   {
-    logRecord.append(kv.first));
+    logRecord.append(kv.first);
     logRecord.append(": ");
     std::ostringstream str1;
-    str1 << kv.second();
+    str1 << kv.second;
     
       logRecord.append(str1.str());
       logRecord.append(", ");
@@ -206,10 +206,10 @@ std::string OStreamLogRecordExporter::printAttributes(
   std::string logRecord = "";
   for (const auto &kv : map)
   {
-    logRecord.append(kv.first));
+    logRecord.append(kv.first);
     logRecord.append(": ");
     std::ostringstream str1;
-    str1 << kv.second();
+    str1 << kv.second;
     
       logRecord.append(str1.str());
       logRecord.append(", ");
