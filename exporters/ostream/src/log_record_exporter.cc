@@ -12,6 +12,7 @@
 #include <string>
 #include <mutex>
 #include <type_traits>
+#include <sstream>
 
 namespace nostd     = opentelemetry::nostd;
 namespace sdklogs   = opentelemetry::sdk::logs;
@@ -186,7 +187,13 @@ std::string OStreamLogRecordExporter::printAttributes(
   std::string logRecord = "";
   for (const auto &kv : map)
   {
-    logRecord.append(kv.first + ": " + static_cast<std::string>(kv.second) + ", ");
+    logRecord.append(kv.first));
+    logRecord.append(": ");
+    std::ostringstream str1;
+    str1 << kv.second();
+    
+      logRecord.append(str1.str());
+      logRecord.append(", ");
     //opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
   }
 
@@ -199,7 +206,13 @@ std::string OStreamLogRecordExporter::printAttributes(
   std::string logRecord = "";
   for (const auto &kv : map)
   {
-    logRecord.append(kv.first + ": " + static_cast<std::string>(kv.second) + ", ");
+    logRecord.append(kv.first));
+    logRecord.append(": ");
+    std::ostringstream str1;
+    str1 << kv.second();
+    
+      logRecord.append(str1.str());
+      logRecord.append(", ");
     //opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
   }
 
