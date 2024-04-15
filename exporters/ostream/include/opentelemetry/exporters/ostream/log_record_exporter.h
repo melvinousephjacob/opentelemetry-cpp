@@ -63,9 +63,9 @@ private:
   bool is_shutdown_ = false;
   mutable opentelemetry::common::SpinLockMutex lock_;
   bool isShutdown() const noexcept;
-  std::string printAttributes(
+  void printAttributes(
       const std::unordered_map<std::string, opentelemetry::sdk::common::OwnedAttributeValue> &map);
-  std::string printAttributes(
+  void printAttributes(
       const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map);
 };
 }  // namespace logs
