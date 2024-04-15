@@ -63,11 +63,9 @@ private:
   mutable opentelemetry::common::SpinLockMutex lock_;
   bool isShutdown() const noexcept;
   void printAttributes(
-      const std::unordered_map<std::string, opentelemetry::sdk::common::OwnedAttributeValue> &map,
-      const std::string prefix = "\n\t");
+      const std::unordered_map<std::string, opentelemetry::sdk::common::OwnedAttributeValue> &map);
   void printAttributes(
-      const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map,
-      const std::string prefix = "\n\t");
+      const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map);
 };
 }  // namespace logs
 }  // namespace exporter
