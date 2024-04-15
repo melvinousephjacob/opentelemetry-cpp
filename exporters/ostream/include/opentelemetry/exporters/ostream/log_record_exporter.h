@@ -14,6 +14,7 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
+#include <string>
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace exporter
@@ -62,9 +63,9 @@ private:
   bool is_shutdown_ = false;
   mutable opentelemetry::common::SpinLockMutex lock_;
   bool isShutdown() const noexcept;
-  void printAttributes(
+  std::string printAttributes(
       const std::unordered_map<std::string, opentelemetry::sdk::common::OwnedAttributeValue> &map);
-  void printAttributes(
+  std::string printAttributes(
       const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map);
 };
 }  // namespace logs
