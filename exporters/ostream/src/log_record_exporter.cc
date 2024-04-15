@@ -13,6 +13,7 @@
 #include <mutex>
 #include <type_traits>
 #include <cstdio>
+#include <cstdlib>
 
 namespace nostd     = opentelemetry::nostd;
 namespace sdklogs   = opentelemetry::sdk::logs;
@@ -187,13 +188,17 @@ std::string OStreamLogRecordExporter::printAttributes(
   std::string logRecord = "";
   for (const auto &kv : map)
   {
+    FILE* fp = tmpfile();
     logRecord.append(kv.first);
     logRecord.append(": ");
-    char buffer[100];
-    sprintf(buffer, "%d", kv.second);
+    char buffer[500];
+    fputs(kv.second, fp);
+    rewind(fp);
+    fgets(buffer, sizeof(buffer), fp);
     
       logRecord.append(buffer);
       logRecord.append(", ");
+    fclose(fp);
     //opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
   }
 
@@ -204,15 +209,20 @@ std::string OStreamLogRecordExporter::printAttributes(
     const std::unordered_map<std::string, opentelemetry::common::AttributeValue> &map)
 {
   std::string logRecord = "";
+  
   for (const auto &kv : map)
   {
+    FILE* fp = tmpfile();
     logRecord.append(kv.first);
     logRecord.append(": ");
-    char buffer[100];
-    sprintf(buffer, "%d", kv.second);
+    char buffer[500];
+    fputs(kv.second, fp);
+    rewind(fp);
+    fgets(buffer, sizeof(buffer), fp);
     
       logRecord.append(buffer);
       logRecord.append(", ");
+    fclose(fp);
     //opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
   }
 
