@@ -89,7 +89,7 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
 
     sout_ << "  body               : ";
     opentelemetry::exporter::ostream_common::print_value(log_record->GetBody(), sout_);
-    sout_ << ",  resource           : ";
+    sout_ << ",  resource           : , ";
     printAttributes(log_record->GetResource().GetAttributes());
 
     sout_ << ",  attributes         : ";
@@ -140,6 +140,7 @@ void OStreamLogRecordExporter::printAttributes(
   {
     sout_ << kv.first << ": ";
     opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
+    sout_ << ", ";
   }
 }
 
@@ -150,6 +151,7 @@ void OStreamLogRecordExporter::printAttributes(
   {
     sout_ << kv.first << ": ";
     opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
+    sout_ << ", ";
   }
 }
 
