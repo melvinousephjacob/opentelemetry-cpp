@@ -92,11 +92,11 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
     sout_ << ",  resource           : , ";
     printAttributes(log_record->GetResource().GetAttributes());
 
-    sout_ << ",  attributes         : ";
+    sout_ << "  attributes         : ";
 
     printAttributes(log_record->GetAttributes());
 
-    sout_ << ",  event_id           : " << event_id << ", "
+    sout_ << "  event_id           : " << event_id << ", "
           << "  event_name         : " << log_record->GetEventName() << ", "
           << "  trace_id           : " << std::string(trace_id, trace_id_len) << ", "
           << "  span_id            : " << std::string(span_id, span_id__len) << ", "
@@ -108,7 +108,7 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
           << "    attributes       : ";
 
     printAttributes(log_record->GetInstrumentationScope().GetAttributes());
-    sout_ << ", }\n";
+    sout_ << " }\n";
   }
 
   return sdk::common::ExportResult::kSuccess;
