@@ -73,9 +73,18 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
     // into severity_num and severity_text
 
     std::string logRecord = "MR_OTEL_ConsoleLog{ ";
-          logRecord.append("  timestamp          : " + std::to_string(log_record->GetTimestamp().time_since_epoch().count()) + ", ");
-          logRecord.append("  observed_timestamp : " + std::to_string(log_record->GetObservedTimestamp().time_since_epoch().count()) + ", ");
-          logRecord.append("  severity_num       : " + static_cast<std::string>(log_record->GetSeverity()));
+          logRecord.append("  timestamp          : ");
+          logRecord.append(std::to_string(log_record->GetTimestamp().time_since_epoch().count()));
+          logRecord.append(", ");
+    
+          logRecord.append("  observed_timestamp : ");
+          logRecord.append(std::to_string(log_record->GetObservedTimestamp().time_since_epoch().count()));
+          logRecord.append(", ");
+    
+          logRecord.append("  severity_num       : ");
+    logRecord.append(static_cast<std::string>(log_record->GetSeverity()));
+    logRecord.append(", ");
+    
           logRecord.append("  severity_text      : ");
 
     std::uint32_t severity_index = static_cast<std::uint32_t>(log_record->GetSeverity());
@@ -85,28 +94,64 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
     }
     else
     {
-      logRecord.append(opentelemetry::logs::SeverityNumToText[severity_index] + ", ");
+      logRecord.append(opentelemetry::logs::SeverityNumToText[severity_index]);
+      logRecord.append(", ");
     }
 
-    logRecord.append("  body               : " + static_cast<std::string>(log_record->GetBody()) + ", ");
+    logRecord.append("  body               : ");
+    logRecord.append(static_cast<std::string>(log_record->GetBody()));
+    logRecord.append(", ");
     //opentelemetry::exporter::ostream_common::print_value(log_record->GetBody(), sout_);
-    logRecord.append("  resource           : " + printAttributes(log_record->GetResource().GetAttributes()) + ", ");
+    logRecord.append("  resource           : ");
+    logRecord.append(printAttributes(log_record->GetResource().GetAttributes()));
+    logRecord.append(", ");
     //printAttributes(log_record->GetResource().GetAttributes(), logRecord);
 
-    logRecord.append("  attributes         : " + printAttributes(log_record->GetAttributes()) + ", ");
+    logRecord.append("  attributes         : ");
+    logRecord.append(printAttributes(log_record->GetAttributes()));
+    logRecord.append(", ");
+    
 
     //printAttributes(log_record->GetAttributes(), "\n    ");
 
-          logRecord.append("  event_id           : " + event_id + ", ");
-          logRecord.append("  event_name         : " + log_record->GetEventName() + ", ");
-          logRecord.append("  trace_id           : " + std::string(trace_id, trace_id_len) + ", ");
-          logRecord.append("  span_id            : " + std::string(span_id, span_id__len) + ", ");
-          logRecord.append("  trace_flags        : " + std::string(trace_flags, trace_flags_len) + ", ");
+          logRecord.append("  event_id           : ");
+    logRecord.append(event_id);
+    logRecord.append(", ");
+    
+          logRecord.append("  event_name         : ");
+    logRecord.append(log_record->GetEventName());
+    logRecord.append(", ");
+    
+          logRecord.append("  trace_id           : ");
+    logRecord.append(std::string(trace_id, trace_id_len));
+    logRecord.append(", ");
+    
+          logRecord.append("  span_id            : ");
+    logRecord.append(std::string(span_id, span_id__len));
+    logRecord.append(", ");
+    
+          logRecord.append("  trace_flags        : ");
+    logRecord.append(std::string(trace_flags, trace_flags_len));
+    logRecord.append(", ");
+    
           logRecord.append("  scope              : , ");
-          logRecord.append("    name             : " + log_record->GetInstrumentationScope().GetName() + ", ");
-          logRecord.append("    version          : " + log_record->GetInstrumentationScope().GetVersion() + ", ");
-         logRecord.append("    schema_url       : " + log_record->GetInstrumentationScope().GetSchemaURL() + ", ");
-          logRecord.append("    attributes       : " + printAttributes(log_record->GetInstrumentationScope().GetAttributes()) + ", ");
+    
+          logRecord.append("    name             : ");
+    logRecord.append(log_record->GetInstrumentationScope().GetName());
+    logRecord.append(", ");
+    
+          logRecord.append("    version          : ");
+    logRecord.append(log_record->GetInstrumentationScope().GetVersion());
+    logRecord.append(", ");
+    
+         logRecord.append("    schema_url       : ");
+    logRecord.append(log_record->GetInstrumentationScope().GetSchemaURL());
+    logRecord.append(", ");
+    
+          logRecord.append("    attributes       : ");
+    logRecord.append(printAttributes(log_record->GetInstrumentationScope().GetAttributes()));
+    logRecord.append(", ");
+    
           logRecord.append("}");
 
     //printAttributes(log_record->GetInstrumentationScope().GetAttributes());
