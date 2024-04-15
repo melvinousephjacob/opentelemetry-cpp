@@ -99,18 +99,18 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
 
           logRecord.append("  event_id           : " + event_id + ", ");
           logRecord.append("  event_name         : " + log_record->GetEventName() + ", ");
-          logRecord.append("  trace_id           : " << std::string(trace_id, trace_id_len) + ", ");
-          logRecord.append("  span_id            : " << std::string(span_id, span_id__len) + ", ");
-          logRecord.append("  trace_flags        : " << std::string(trace_flags, trace_flags_len) + ", ");
+          logRecord.append("  trace_id           : " + std::string(trace_id, trace_id_len) + ", ");
+          logRecord.append("  span_id            : " + std::string(span_id, span_id__len) + ", ");
+          logRecord.append("  trace_flags        : " + std::string(trace_flags, trace_flags_len) + ", ");
           logRecord.append("  scope              : , ");
-          logRecord.append("    name             : " << log_record->GetInstrumentationScope().GetName() + ", ");
-          logRecord.append("    version          : " << log_record->GetInstrumentationScope().GetVersion() + ", ");
-         logRecord.append("    schema_url       : " << log_record->GetInstrumentationScope().GetSchemaURL() + ", ");
+          logRecord.append("    name             : " + log_record->GetInstrumentationScope().GetName() + ", ");
+          logRecord.append("    version          : " + log_record->GetInstrumentationScope().GetVersion() + ", ");
+         logRecord.append("    schema_url       : " + log_record->GetInstrumentationScope().GetSchemaURL() + ", ");
           logRecord.append("    attributes       : " + printAttributes(log_record->GetInstrumentationScope().GetAttributes()) + ", ");
           logRecord.append("}");
 
     //printAttributes(log_record->GetInstrumentationScope().GetAttributes());
-    sout_ << logRecord << \n";
+    sout_ << logRecord << "\n";
   }
 
   return sdk::common::ExportResult::kSuccess;
