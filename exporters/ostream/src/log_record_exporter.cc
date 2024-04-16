@@ -92,7 +92,7 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
     sout_ << ",  resource           : , ";
     printAttributes(log_record->GetResource().GetAttributes());
 
-    sout_ << "  attributes         : ";
+    sout_ << "  attributes         : , ";
 
     printAttributes(log_record->GetAttributes());
 
