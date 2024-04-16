@@ -18,6 +18,7 @@
 #include "opentelemetry/logs/severity.h"
 #include "iloggingserver.h"
 #include <map>
+#include <unordered_map>
 #include <string>
 #include "opentelemetry/logs/provider.h"
 #include "opentelemetry/sdk/version/version.h"
@@ -84,7 +85,7 @@ void CleanupLogger()
 nostd::shared_ptr<logs::Logger> get_logger()
 {
   auto provider = logs::Provider::GetLoggerProvider();
-  return provider->GetLogger("MR_DPC_Logger", "MR_DPC");
+  return provider->GetLogger("MR_DPC_Logger", "MR_DPC", "1.0");
 }
 
 std::map<Severity, opentelemetry::logs::Severity> severityMap = 
@@ -131,8 +132,14 @@ void CentralLogServer::Log(std::string message, Severity severity, CoreLogData c
 		otelSeverity = severityMap[severity];
 	else
 		otelSeverity = opentelemetry::logs::Severity::kInvalid;
-	
-	logger->Log(otelSeverity, message + " " + coreLogData.Resolution, {{"Modulename", "SampleModuleName"}, {"Namespace", "SampleNamespace"}});
+
+	std::unordered_map<string, int> mymap = {{ "First", 1 },
+                                    { "Second",2 }
+                                    { "Third", 3 }
+                                                 }; 
+
+	logger.Debug("Outputting a map ", mymap);
+	//logger->Log(otelSeverity, message + " " + coreLogData.Resolution + " " + "Attributes: {"Modulename": "SampleModuleName", "Namespace": "SampleNamespace"});
 }
 
 void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
