@@ -45,6 +45,8 @@ namespace nostd = opentelemetry::nostd;
 
 namespace
 {
+std::string _moduleName;
+std::string _version;
 void InitTracer()
 {
   // Create ostream span exporter instance
@@ -85,7 +87,7 @@ void CleanupLogger()
 nostd::shared_ptr<logs::Logger> get_logger()
 {
   auto provider = logs::Provider::GetLoggerProvider();
-  return provider->GetLogger("MR_DPC_Logger", "MR_DPC", "1.0");
+  return provider->GetLogger("MR_DPC_Logger", _moduleName, _version);
 }
 
 std::map<Severity, opentelemetry::logs::Severity> severityMap = 
@@ -103,7 +105,7 @@ std::map<Severity, opentelemetry::logs::Severity> severityMap =
 class CentralLogServer : public ICentralLogServer
 {
 	public:
-		CentralLogServer();
+		CentralLogServer(std::string moduleName, std::string version);
 
 		~CentralLogServer();
 
@@ -112,10 +114,12 @@ class CentralLogServer : public ICentralLogServer
 		void Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData);
 };
 
-CentralLogServer::CentralLogServer()
+CentralLogServer::CentralLogServer(std::string moduleName, std::string version)
 {
 	InitLogger();
 	InitTracer();
+	_moduleName = moduleName;
+	_version = version;
 }
 
 CentralLogServer::~CentralLogServer()
@@ -134,10 +138,9 @@ void CentralLogServer::Log(std::string message, Severity severity, CoreLogData c
 		otelSeverity = opentelemetry::logs::Severity::kInvalid;
 
 	std::unordered_map<std::string, std::string> mymap;
-	mymap["First"] = "firstssss";
+	mymap["NameSpace"] = coreLogData.Namespace;
 
-	logger->Debug("Outputting a map ", mymap);
-	//logger->Log(otelSeverity, message + " " + coreLogData.Resolution + " " + "Attributes: {"Modulename": "SampleModuleName", "Namespace": "SampleNamespace"});
+	logger->Log(otelSeverity, message, mymap);
 }
 
 void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
@@ -154,9 +157,9 @@ void CentralLogServer::Log(std::string message, Severity severity, InfoCategory 
 
 int main()
 {
-  auto centralLogServer = new CentralLogServer;
+  auto centralLogServer = new CentralLogServer("Sample module", "1.0");
   CoreLogData coreLogData;
-  coreLogData.Resolution = "Example core log data";
+  coreLogData.Namespace = "Sample Namespace";
   
   centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
   centralLogServer->Log("HELLO", Fatal, coreLogData);
