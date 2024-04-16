@@ -133,9 +133,9 @@ void CentralLogServer::Log(std::string message, Severity severity, CoreLogData c
 	else
 		otelSeverity = opentelemetry::logs::Severity::kInvalid;
 
-	std::unordered_map<string, int> mymap = {{ "First", 1 },
-                                    { "Second",2 }
-                                    { "Third", 3 }
+	std::unordered_map<std::string, std::string> mymap = {{ "First", "first" },
+                                    { "Second","second" }
+                                    { "Third", "third" }
                                                  }; 
 
 	logger.Debug("Outputting a map ", mymap);
