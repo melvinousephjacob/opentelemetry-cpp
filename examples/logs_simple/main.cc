@@ -138,7 +138,7 @@ void CentralLogServer::Log(std::string message, Severity severity, CoreLogData c
                                     { "Third", "third" }
                                                  }; 
 
-	logger.Debug("Outputting a map ", mymap);
+	logger->Debug("Outputting a map ", mymap);
 	//logger->Log(otelSeverity, message + " " + coreLogData.Resolution + " " + "Attributes: {"Modulename": "SampleModuleName", "Namespace": "SampleNamespace"});
 }
 
