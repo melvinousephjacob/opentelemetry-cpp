@@ -92,14 +92,14 @@ nostd::shared_ptr<logs::Logger> get_logger()
 
 std::map<Severity, opentelemetry::logs::Severity> severityMap = 
 {
-	{None, opentelemetry::logs::Severity::kInvalid},
+	{None, opentelemetry::logs::Severity::kDebug},
 	{DebugInfo, opentelemetry::logs::Severity::kDebug},
-	{DebugVerbose, opentelemetry::logs::Severity::kDebug2},
+	{DebugVerbose, opentelemetry::logs::Severity::kDebug},
 	{Info, opentelemetry::logs::Severity::kInfo},
 	{Warning, opentelemetry::logs::Severity::kWarn},
 	{Error, opentelemetry::logs::Severity::kError},
 	{Fatal, opentelemetry::logs::Severity::kFatal},
-	{Hazard, opentelemetry::logs::Severity::kFatal4}
+	{Hazard, opentelemetry::logs::Severity::kFatal}
 };
 
 class CentralLogServer : public ICentralLogServer
@@ -140,7 +140,9 @@ void CentralLogServer::Log(std::string message, Severity severity, CoreLogData c
 	std::unordered_map<std::string, std::string> mymap;
 	mymap["NameSpace"] = coreLogData.Namespace;
 
-	logger->Log(otelSeverity, message, mymap);
+	if(severity == Fatal)
+		logger->Fatal(message, mymap);
+	//logger->Log(otelSeverity, message, mymap);
 }
 
 void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
