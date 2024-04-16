@@ -132,7 +132,7 @@ void CentralLogServer::Log(std::string message, Severity severity, CoreLogData c
 	else
 		otelSeverity = opentelemetry::logs::Severity::kInvalid;
 	
-	logger->Log(otelSeverity, message + " " + coreLogData.Resolution);
+	logger->Log(otelSeverity, message + " " + coreLogData.Resolution, "ModuleName", "NameSpace");
 }
 
 void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
