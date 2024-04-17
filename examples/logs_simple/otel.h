@@ -84,4 +84,10 @@ namespace otel
     auto provider = logs::Provider::GetLoggerProvider();
     return provider->GetLogger("MR_DPC_Logger", _moduleName, _version);
   }
+
+  nostd::shared_ptr<trace::Tracer> get_tracer(std::string _moduleName)
+  {
+    auto provider = trace_api::Provider::GetTracerProvider();
+    return provider->GetTracer(_moduleName, OPENTELEMETRY_SDK_VERSION);
+  }
 }
