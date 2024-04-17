@@ -117,12 +117,11 @@ bool OStreamSpanExporter::isShutdown() const noexcept
   return is_shutdown_;
 }
 void OStreamSpanExporter::printAttributes(
-    const std::unordered_map<std::string, sdkcommon::OwnedAttributeValue> &map,
-    const std::string prefix)
+    const std::unordered_map<std::string, sdkcommon::OwnedAttributeValue> &map)
 {
   for (const auto &kv : map)
   {
-    sout_ << prefix << kv.first << ": ";
+    sout_ << kv.first << ": ";
     opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
     sout_ << " , ";
   }
