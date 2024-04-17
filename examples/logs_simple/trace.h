@@ -34,6 +34,6 @@ namespace trace
 	{
 		auto tracer = otel::get_tracer(_moduleName);
 	
-		auto scoped_span = trace::Scope(tracer->StartSpan(_moduleName));
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName));
 	}
 }
