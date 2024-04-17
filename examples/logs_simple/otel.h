@@ -79,7 +79,7 @@ namespace otel
     logs_api::Provider::SetLoggerProvider(none);
   }
   
-  nostd::shared_ptr<logs::Logger> get_logger(std::string _moduleName, std::string _version;)
+  nostd::shared_ptr<logs::Logger> get_logger(std::string _moduleName, std::string _version)
   {
     auto provider = logs::Provider::GetLoggerProvider();
     return provider->GetLogger("MR_DPC_Logger", _moduleName, _version);
