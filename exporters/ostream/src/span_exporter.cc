@@ -70,7 +70,7 @@ sdk::common::ExportResult OStreamSpanExporter::Export(
       span->GetSpanId().ToLowerBase16(span_id);
       span->GetParentSpanId().ToLowerBase16(parent_span_id);
 
-      sout_ << "{"
+      sout_ << "MR_OTEL_ConsoleTrace{"
             << "  name          : " << span->GetName()
             << " ,  trace_id      : " << std::string(trace_id, 32)
             << " , span_id       : " << std::string(span_id, 16)
@@ -83,13 +83,13 @@ sdk::common::ExportResult OStreamSpanExporter::Export(
             << " , status        : " << statusMap[int(span->GetStatus())]
             << " , attributes    : ";
       printAttributes(span->GetAttributes());
-      sout_ << " ,  events        : ";
+      sout_ << "  events        : ";
       printEvents(span->GetEvents());
       sout_ << " ,  links         : ";
       printLinks(span->GetLinks());
       sout_ << " ,  resources     : ";
       printResources(span->GetResource());
-      sout_ << " ,  instr-lib     : ";
+      sout_ << "  instr-lib     : ";
       printInstrumentationScope(span->GetInstrumentationScope());
       sout_ << ", }\n";
     }
