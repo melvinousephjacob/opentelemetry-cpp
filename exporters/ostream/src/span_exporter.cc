@@ -71,27 +71,27 @@ sdk::common::ExportResult OStreamSpanExporter::Export(
       span->GetParentSpanId().ToLowerBase16(parent_span_id);
 
       sout_ << "{"
-            << "\n  name          : " << span->GetName()
-            << "\n  trace_id      : " << std::string(trace_id, 32)
-            << "\n  span_id       : " << std::string(span_id, 16)
-            << "\n  tracestate    : " << span->GetSpanContext().trace_state()->ToHeader()
-            << "\n  parent_span_id: " << std::string(parent_span_id, 16)
-            << "\n  start         : " << span->GetStartTime().time_since_epoch().count()
-            << "\n  duration      : " << span->GetDuration().count()
-            << "\n  description   : " << span->GetDescription()
-            << "\n  span kind     : " << span->GetSpanKind()
-            << "\n  status        : " << statusMap[int(span->GetStatus())]
-            << "\n  attributes    : ";
+            << "  name          : " << span->GetName()
+            << " ,  trace_id      : " << std::string(trace_id, 32)
+            << " , span_id       : " << std::string(span_id, 16)
+            << " , tracestate    : " << span->GetSpanContext().trace_state()->ToHeader()
+            << " , parent_span_id: " << std::string(parent_span_id, 16)
+            << " , start         : " << span->GetStartTime().time_since_epoch().count()
+            << " , duration      : " << span->GetDuration().count()
+            << " , description   : " << span->GetDescription()
+            << " , span kind     : " << span->GetSpanKind()
+            << " , status        : " << statusMap[int(span->GetStatus())]
+            << " , attributes    : ";
       printAttributes(span->GetAttributes());
-      sout_ << "\n  events        : ";
+      sout_ << " ,  events        : ";
       printEvents(span->GetEvents());
-      sout_ << "\n  links         : ";
+      sout_ << " ,  links         : ";
       printLinks(span->GetLinks());
-      sout_ << "\n  resources     : ";
+      sout_ << " ,  resources     : ";
       printResources(span->GetResource());
-      sout_ << "\n  instr-lib     : ";
+      sout_ << " ,  instr-lib     : ";
       printInstrumentationScope(span->GetInstrumentationScope());
-      sout_ << "\n}\n";
+      sout_ << ", }\n";
     }
   }
 
@@ -124,6 +124,7 @@ void OStreamSpanExporter::printAttributes(
   {
     sout_ << prefix << kv.first << ": ";
     opentelemetry::exporter::ostream_common::print_value(kv.second, sout_);
+    sout_ << " , ";
   }
 }
 
@@ -131,12 +132,12 @@ void OStreamSpanExporter::printEvents(const std::vector<trace_sdk::SpanDataEvent
 {
   for (const auto &event : events)
   {
-    sout_ << "\n\t{"
-          << "\n\t  name          : " << event.GetName()
-          << "\n\t  timestamp     : " << event.GetTimestamp().time_since_epoch().count()
-          << "\n\t  attributes    : ";
-    printAttributes(event.GetAttributes(), "\n\t\t");
-    sout_ << "\n\t}";
+    sout_ << "{"
+          << "  name          : " << event.GetName()
+          << " ,  timestamp     : " << event.GetTimestamp().time_since_epoch().count()
+          << " ,  attributes    : ";
+    printAttributes(event.GetAttributes());
+    sout_ << " , }";
   }
 }
 
@@ -148,13 +149,13 @@ void OStreamSpanExporter::printLinks(const std::vector<trace_sdk::SpanDataLink> 
     char span_id[16]  = {0};
     link.GetSpanContext().trace_id().ToLowerBase16(trace_id);
     link.GetSpanContext().span_id().ToLowerBase16(span_id);
-    sout_ << "\n\t{"
-          << "\n\t  trace_id      : " << std::string(trace_id, 32)
-          << "\n\t  span_id       : " << std::string(span_id, 16)
-          << "\n\t  tracestate    : " << link.GetSpanContext().trace_state()->ToHeader()
-          << "\n\t  attributes    : ";
-    printAttributes(link.GetAttributes(), "\n\t\t");
-    sout_ << "\n\t}";
+    sout_ << "{"
+          << "  trace_id      : " << std::string(trace_id, 32)
+          << " ,  span_id       : " << std::string(span_id, 16)
+          << " ,  tracestate    : " << link.GetSpanContext().trace_state()->ToHeader()
+          << " ,  attributes    : ";
+    printAttributes(link.GetAttributes());
+    sout_ << " , }";
   }
 }
 
@@ -163,7 +164,7 @@ void OStreamSpanExporter::printResources(const opentelemetry::sdk::resource::Res
   auto attributes = resources.GetAttributes();
   if (attributes.size())
   {
-    printAttributes(attributes, "\n\t");
+    printAttributes(attributes);
   }
 }
 
