@@ -81,13 +81,13 @@ sdk::common::ExportResult OStreamSpanExporter::Export(
             << " , description   : " << span->GetDescription()
             << " , span kind     : " << span->GetSpanKind()
             << " , status        : " << statusMap[int(span->GetStatus())]
-            << " , attributes    : ";
+            << " , attributes    : , ";
       printAttributes(span->GetAttributes());
       sout_ << "  events        : ";
       printEvents(span->GetEvents());
       sout_ << " ,  links         : ";
       printLinks(span->GetLinks());
-      sout_ << " ,  resources     : ";
+      sout_ << " ,  resources     : , ";
       printResources(span->GetResource());
       sout_ << "  instr-lib     : ";
       printInstrumentationScope(span->GetInstrumentationScope());
