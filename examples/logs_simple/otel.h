@@ -13,7 +13,6 @@
 
 #include "opentelemetry/logs/provider.h"
 #include "opentelemetry/logs/severity.h"
-#include "iloggingserver.h"
 #include <map>
 #include <unordered_map>
 #include <string>
