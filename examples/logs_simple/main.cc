@@ -5,7 +5,7 @@
 
 int main()
 {
-  auto centralLogServer = new CentralLogServer("Sample module", "1.0");
+  auto centralLogServer = new logging::CentralLogServer("Sample module", "1.0");
   CoreLogData coreLogData;
   coreLogData.Namespace = "Sample Namespace";
   
