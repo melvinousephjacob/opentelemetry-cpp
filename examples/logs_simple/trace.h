@@ -36,6 +36,7 @@ namespace trace
 
 		std::unordered_map<std::string, std::string> mymap;
 		mymap["description"] = message;
+		mymap["NameSpace"] = "Sample namespace";
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
 }
