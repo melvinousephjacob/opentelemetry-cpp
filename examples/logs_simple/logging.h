@@ -1,4 +1,5 @@
 #include "otel.h"
+#include "iloggingserver.h"
 namespace logging
 {
 	std::string _moduleName;
@@ -18,14 +19,12 @@ namespace logging
 	CentralLogServer::CentralLogServer(std::string moduleName, std::string version)
 	{
 		otel::InitLogger();
-		otel::InitTracer();
 		_moduleName = moduleName;
 		_version = version;
 	}
 	
 	CentralLogServer::~CentralLogServer()
 	{
-		otel::CleanupTracer();
 		otel::CleanupLogger();
 	}
 	
