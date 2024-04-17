@@ -33,7 +33,9 @@ namespace trace
 	void TraceLogger::TraceInfo(std::string message)
 	{
 		auto tracer = otel::get_tracer(_moduleName);
-	
-		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName));
+
+		std::unordered_map<std::string, std::string> mymap;
+		mymap["description"] = message;
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
 }
