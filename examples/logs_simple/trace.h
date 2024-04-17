@@ -7,18 +7,22 @@ namespace trace
 	class TraceLogger : public ITraceLogger
 	{
 		public:
-			TraceLogger();
+			TraceLogger(std::string moduleName);
 	
 			~TraceLogger();
 	
-			void Log(std::string message, Severity severity, CoreLogData coreLogData);
-			void Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData);
-			void Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData);
+			void TraceInfo(std::string message, std::exception exception);
+		        void TraceInfo(std::string message, TraceData data);
+		        void TraceInfo(std::string message);
+		        void TraceVerbose(std::string message);
+		        void TraceVerbose(std::string message, TraceData data);
+		        void TraceVerbose(std::string message, std::exception exception);
 	};
 	
-	TraceLogger::TraceLogger()
+	TraceLogger::TraceLogger(std::string moduleName)
 	{
 		otel::InitTracer();
+		_moduleName = moduleName;
 	}
 	
 	TraceLogger::~TraceLogger()
@@ -26,21 +30,10 @@ namespace trace
 		otel::CleanupTracer();
 	}
 	
-	void CentralLogServer::Log(std::string message, Severity severity, CoreLogData coreLogData)
+	void TraceLogger::TraceInfo(std::string message)
 	{
 		auto tracer = otel::get_tracer(_moduleName);
 	
 		auto scoped_span = trace::Scope(tracer->StartSpan(_moduleName));
 	}
-	
-	void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
-	{
-		//foo_library();
-	}
-	
-	void CentralLogServer::Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData)
-	{
-		//foo_library();
-	}
-
 }
