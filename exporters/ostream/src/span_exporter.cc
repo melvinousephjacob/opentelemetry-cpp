@@ -91,7 +91,7 @@ sdk::common::ExportResult OStreamSpanExporter::Export(
       printResources(span->GetResource());
       sout_ << "  instr-lib     : ";
       printInstrumentationScope(span->GetInstrumentationScope());
-      sout_ << ", }\n";
+      sout_ << " }\n";
     }
   }
 
