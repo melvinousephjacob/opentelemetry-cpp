@@ -12,9 +12,9 @@ int main()
   centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
   centralLogServer->Log("HELLO", Fatal, coreLogData);
 
-  auto traceLogger = new trace::TraceLogger("Sample module");
-  TraceData traceData;
-  traceData.AdditionalInfo = "This is some additional info.";
-  traceData.DateTime = std::time(0);
-  traceLogger->TraceInfo("Hey", traceData);
+  //auto traceLogger = new trace::TraceLogger("Sample module");
+  //TraceData traceData;
+  //traceData.AdditionalInfo = "This is some additional info.";
+  //traceData.DateTime = std::time(0);
+  //traceLogger->TraceInfo("Hey", traceData);
 }
