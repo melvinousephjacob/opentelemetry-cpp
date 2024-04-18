@@ -13,10 +13,10 @@ namespace trace
 			~TraceLogger();
 	
 			void TraceInfo(std::string message, std::exception exception);
-		        void TraceInfo(std::string message, TraceData data);
+		        void TraceInfo(std::string message, TraceData traceData);
 		        void TraceInfo(std::string message);
 		        void TraceVerbose(std::string message);
-		        void TraceVerbose(std::string message, TraceData data);
+		        void TraceVerbose(std::string message, TraceData traceData);
 		        void TraceVerbose(std::string message, std::exception exception);
 	};
 	
@@ -52,7 +52,7 @@ namespace trace
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
 
-	void TraceLogger::TraceInfo(std::string message, TraceData data)
+	void TraceLogger::TraceInfo(std::string message, TraceData traceData)
 	{
 		auto tracer = otel::get_tracer(_moduleName);
 
@@ -82,7 +82,7 @@ namespace trace
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
 
-	void TraceLogger::TraceVerbose(std::string message, TraceData data)
+	void TraceLogger::TraceVerbose(std::string message, TraceData traceData)
 	{
 		auto tracer = otel::get_tracer(_moduleName);
 
