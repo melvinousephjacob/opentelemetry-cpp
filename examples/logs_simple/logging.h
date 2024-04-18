@@ -67,7 +67,7 @@ namespace logging
 		auto logger = otel::get_logger(_moduleName, _version);
 	
 		std::unordered_map<std::string, std::string> mymap;
-		mymap["InfoCategory"] = infoCategory;
+		mymap["InfoCategory"] = std::to_string(infoCategory);
 
 		LogWithSeverity(logger, severity, mymap, message);
 	}
