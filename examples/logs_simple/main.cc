@@ -5,9 +5,9 @@
 
 int main()
 {
-  auto centralLogServer = new logging::CentralLogServer("Sample module", "1.0");
+  auto centralLogServer = new logging::CentralLogServer("Logger Name", "Sample Namespace", "Sample Classname");
   CoreLogData coreLogData;
-  coreLogData.Namespace = "Sample Namespace";
+  //coreLogData.Namespace = "Sample Namespace";
   
   centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
   centralLogServer->Log("HELLO", Fatal, coreLogData);
