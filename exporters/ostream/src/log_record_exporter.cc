@@ -105,10 +105,10 @@ sdk::common::ExportResult OStreamLogRecordExporter::Export(
           << "    name             : " << log_record->GetInstrumentationScope().GetName() << ", "
           << "    version          : " << log_record->GetInstrumentationScope().GetVersion() << ", "
           << "    schema_url       : " << log_record->GetInstrumentationScope().GetSchemaURL() << ", "
-          << "    attributes       : ";
+          << "    attributes       : , ";
 
     printAttributes(log_record->GetInstrumentationScope().GetAttributes());
-    sout_ << " }\n";
+    sout_ << "}\n";
   }
 
   return sdk::common::ExportResult::kSuccess;
