@@ -67,7 +67,7 @@ namespace trace
 		std::string ts = ss.str();
 		mymap["DateTime"] = ts.empty() ? ts: "";
 		mymap["EventType"] = traceData.EventType.empty() ? traceData.EventType: "";
-		mymap["ExceptionInfo"] = traceData.Exception.empty() ? traceData.Exception: "";
+		mymap["ExceptionInfo"] = traceData.Exception.empty() ? traceData.ExceptionInfo: "";
 		mymap["StackTrace"] = traceData.StackTrace.empty() ? traceData.StackTrace: "";
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
@@ -97,7 +97,7 @@ namespace trace
 		std::string ts = ss.str();
 		mymap["DateTime"] = ts.empty() ? ts: "";
 		mymap["EventType"] = traceData.EventType.empty() ? traceData.EventType: "";
-		mymap["ExceptionInfo"] = traceData.Exception.empty() ? traceData.Exception: "";
+		mymap["ExceptionInfo"] = traceData.Exception.empty() ? traceData.ExceptionInfo: "";
 		mymap["StackTrace"] = traceData.StackTrace.empty() ? traceData.StackTrace: "";
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
