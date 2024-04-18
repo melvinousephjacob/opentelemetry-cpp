@@ -9,8 +9,8 @@ int main()
   CoreLogData coreLogData;
   coreLogData.Namespace = "Sample Namespace";
   
-  //centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
-  //centralLogServer->Log("HELLO", Fatal, coreLogData);
+  centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
+  centralLogServer->Log("HELLO", Fatal, coreLogData);
 
   auto traceLogger = new trace::TraceLogger("Sample module");
   traceLogger->TraceInfo("Hey");
