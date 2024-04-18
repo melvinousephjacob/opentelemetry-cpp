@@ -78,10 +78,10 @@ namespace otel
     logs_api::Provider::SetLoggerProvider(none);
   }
   
-  nostd::shared_ptr<logs::Logger> get_logger(std::string _moduleName, std::string _version)
+  nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string _nameSpace, std::string _className)
   {
     auto provider = logs::Provider::GetLoggerProvider();
-    return provider->GetLogger("MR_DPC_Logger", _moduleName, _version);
+    return provider->GetLogger(_loggerName, "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Namespace", _nameSpace}, {"ClassName", _className}}));
   }
 
   nostd::shared_ptr<trace_api::Tracer> get_tracer(std::string _moduleName)
