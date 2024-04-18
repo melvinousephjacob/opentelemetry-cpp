@@ -5,13 +5,15 @@
 
 int main()
 {
-  auto centralLogServer = new logging::CentralLogServer("Logger Name", "Sample Namespace", "Sample Classname");
+  auto centralLogServer1 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1");
+  auto centralLogServer2 = new logging::CentralLogServer("Logger #1", "Sample Namespace #2", "Sample Classname #2");
+  auto centralLogServer3 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1");
   CoreLogData coreLogData;
   //coreLogData.Namespace = "Sample Namespace";
   
-  centralLogServer->Log("This is a sample log message", DebugInfo, coreLogData);
-  centralLogServer->Log("HELLO", Fatal, coreLogData);
-  centralLogServer->Log("Hiiii", Error, OSEvent, coreLogData);
+  centralLogServer1->Log("This is a sample log message", DebugInfo, coreLogData);
+  centralLogServer2->Log("HELLO", Fatal, coreLogData);
+  centralLogServer3->Log("Hiiii", Error, OSEvent, coreLogData);
 
   //auto traceLogger = new trace::TraceLogger("Sample module");
   //TraceData traceData;
