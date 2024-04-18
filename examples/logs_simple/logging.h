@@ -8,7 +8,7 @@ namespace logging
 	class CentralLogServer : public ICentralLogServer
 	{
 		public:
-			CentralLogServer(std::string moduleName, std::string version);
+			CentralLogServer(std::string loggerName, std::string nameSpace, std::string className);
 	
 			~CentralLogServer();
 	
