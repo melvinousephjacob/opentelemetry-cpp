@@ -39,4 +39,59 @@ namespace trace
 		mymap["NameSpace"] = "Sample namespace";
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
+
+	void TraceLogger::TraceInfo(std::string message, std::exception exception)
+	{
+		auto tracer = otel::get_tracer(_moduleName);
+
+		std::unordered_map<std::string, std::string> mymap;
+		mymap["description"] = message;
+		mymap["NameSpace"] = "Sample namespace";
+		mymap["ExceptionInfo"] = exception.what();
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
+	}
+
+	void TraceLogger::TraceInfo(std::string message, TraceData data)
+	{
+		auto tracer = otel::get_tracer(_moduleName);
+
+		std::unordered_map<std::string, std::string> mymap;
+		mymap["description"] = message;
+		mymap["NameSpace"] = "Sample namespace";
+		mymap["ExceptionInfo"] = exception.what();
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
+	}
+
+	void TraceLogger::TraceVerbose(std::string message)
+	{
+		auto tracer = otel::get_tracer(_moduleName);
+
+		std::unordered_map<std::string, std::string> mymap;
+		mymap["description"] = message;
+		mymap["NameSpace"] = "Sample namespace";
+		mymap["ExceptionInfo"] = exception.what();
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
+	}
+
+	void TraceLogger::TraceVerbose(std::string message, TraceData data)
+	{
+		auto tracer = otel::get_tracer(_moduleName);
+
+		std::unordered_map<std::string, std::string> mymap;
+		mymap["description"] = message;
+		mymap["NameSpace"] = "Sample namespace";
+		mymap["ExceptionInfo"] = exception.what();
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
+	}
+
+	void TraceLogger::TraceVerbose(std::string message, std::exception exception)
+	{
+		auto tracer = otel::get_tracer(_moduleName);
+
+		std::unordered_map<std::string, std::string> mymap;
+		mymap["description"] = message;
+		mymap["NameSpace"] = "Sample namespace";
+		mymap["ExceptionInfo"] = exception.what();
+		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
+	}
 }
