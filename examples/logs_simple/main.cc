@@ -13,5 +13,8 @@ int main()
   centralLogServer->Log("HELLO", Fatal, coreLogData);
 
   auto traceLogger = new trace::TraceLogger("Sample module");
+  TraceData traceData;
+  traceData.AdditionalInfo = "This is some additional info.";
+  
   traceLogger->TraceInfo("Hey");
 }
