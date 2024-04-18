@@ -18,9 +18,10 @@ namespace logging
 			void LogWithSeverity(nostd::shared_ptr<logs::Logger> logger, Severity severity, std::unordered_map<std::string, std::string> mymap, std::string message);
 	};
 	
-	CentralLogServer::CentralLogServer(std::string moduleName, std::string version)
+	CentralLogServer::CentralLogServer(std::string loggerName, std::string nameSpace, std::string className)
 	{
 		otel::InitLogger();
+		otel::get_logger(loggerName, nameSpace, className);
 		_moduleName = moduleName;
 		_version = version;
 	}
