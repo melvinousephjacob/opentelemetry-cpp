@@ -14,7 +14,7 @@
 #include "opentelemetry/sdk/trace/simple_processor_factory.h"
 #include "opentelemetry/sdk/trace/tracer_provider_factory.h"
 #include "opentelemetry/trace/provider.h"
-#include "opentelemetry/iloggingserver.h"
+#include "iloggingserver.h"
 #include <map>
 #include <string>
 #include "opentelemetry/logs/provider.h"
@@ -51,21 +51,6 @@ namespace
 opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts;
 void InitTracer()
 {
-  if (trace_opts.url.size() > 9)
-  {
-    if (trace_opts.url.substr(trace_opts.url.size() - 8) == "/v1/logs")
-    {
-      trace_opts.url = trace_opts.url.substr(0, trace_opts.url.size() - 8) + "/v1/traces";
-    }
-    else if (trace_opts.url.substr(trace_opts.url.size() - 9) == "/v1/logs/")
-    {
-      trace_opts.url = trace_opts.url.substr(0, trace_opts.url.size() - 9) + "/v1/traces";
-    }
-    else
-    {
-      trace_opts.url = opentelemetry::exporter::otlp::GetOtlpDefaultHttpTracesEndpoint();
-    }
-  }
   std::cout << "Using " << trace_opts.url << " to export trace spans." << std::endl;
   // Create OTLP exporter instance
   auto exporter  = otlp::OtlpHttpExporterFactory::Create(trace_opts);
@@ -195,32 +180,8 @@ void CentralLogServer::Log(std::string message, Severity severity, InfoCategory 
 */
 int main(int argc, char *argv[])
 {
-  if (argc > 1)
-  {
-    trace_opts.url  = argv[1];
-    logger_opts.url = argv[1];
-    if (argc > 2)
-    {
-      std::string debug        = argv[2];
-      trace_opts.console_debug = debug != "" && debug != "0" && debug != "no";
-    }
-
-    if (argc > 3)
-    {
-      std::string binary_mode = argv[3];
-      if (binary_mode.size() >= 3 && binary_mode.substr(0, 3) == "bin")
-      {
-        trace_opts.content_type  = opentelemetry::exporter::otlp::HttpRequestContentType::kBinary;
-        logger_opts.content_type = opentelemetry::exporter::otlp::HttpRequestContentType::kBinary;
-      }
-    }
-  }
-
-  if (trace_opts.console_debug)
-  {
-    internal_log::GlobalLogHandler::SetLogLevel(internal_log::LogLevel::Debug);
-  }
-  
+  trace_opts.url  = "http://10.42.0.249:4318/v1/traces";
+  logger_opts.url = "http://10.42.0.249:4318/v1/logs";
   auto centralLogServer = new CentralLogServer;
   CoreLogData coreLogData;
   coreLogData.Resolution = "Example core log data";
