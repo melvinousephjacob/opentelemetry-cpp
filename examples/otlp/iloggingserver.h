@@ -1,5 +1,5 @@
 #pragma once
-#include "opentelemetry/models.h";
+#include "models.h";
 #include <string>
 #include <exception>
 
