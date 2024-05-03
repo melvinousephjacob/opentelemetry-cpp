@@ -85,7 +85,7 @@ if(WITH_OTLP_HTTP)
 
   # LOG
 
-  add_executable(example_otlp_http_log http_log_main.cc)
+  add_executable(example_otlp_http_log main.cc)
   target_link_libraries(example_otlp_http_log ${CMAKE_THREAD_LIBS_INIT}
                         common_logs_foo_library)
 
