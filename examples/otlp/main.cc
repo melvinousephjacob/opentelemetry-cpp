@@ -6,13 +6,14 @@
 int main()
 {
   opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
+  opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts;
   
   trace_opts.url  = "http://opentelemetry-collector-lwshost:4318/v1/traces";
   logger_opts.url = "http://opentelemetry-collector-lwshost:4318/v1/logs";
   
-  auto centralLogServer1 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1");
-  auto centralLogServer2 = new logging::CentralLogServer("Logger #1", "Sample Namespace #2", "Sample Classname #2");
-  auto centralLogServer3 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1");
+  auto centralLogServer1 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1", logger_opts);
+  auto centralLogServer2 = new logging::CentralLogServer("Logger #1", "Sample Namespace #2", "Sample Classname #2", logger_opts);
+  auto centralLogServer3 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1", logger_opts);
   CoreLogData coreLogData;
   coreLogData.Namespace = "Sample Namespace";
   
