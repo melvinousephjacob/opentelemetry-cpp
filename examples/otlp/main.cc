@@ -5,6 +5,8 @@
 
 int main()
 {
+  opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
+  
   trace_opts.url  = "http://opentelemetry-collector-lwshost:4318/v1/traces";
   logger_opts.url = "http://opentelemetry-collector-lwshost:4318/v1/logs";
   
