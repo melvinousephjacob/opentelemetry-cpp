@@ -2,7 +2,7 @@
 #include "logging.h"
 #include "itracelogger.h"
 #include <sstream>
-namespace trace
+namespace traces
 {
 	std::string _moduleName;
 
