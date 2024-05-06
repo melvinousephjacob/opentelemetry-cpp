@@ -21,7 +21,7 @@ int main()
   centralLogServer2->Log("HELLO", Fatal, coreLogData);
   centralLogServer3->Log("Hiiii", Error, OSEvent, coreLogData);
 
-  //auto traceLogger = new trace::TraceLogger("Sample module");
+  //auto traceLogger = new traces::TraceLogger("Sample module");
   //TraceData traceData;
   //traceData.AdditionalInfo = "This is some additional info.";
   //traceData.DateTime = std::time(0);
