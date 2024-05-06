@@ -9,7 +9,7 @@ namespace trace
 	class TraceLogger : public ITraceLogger
 	{
 		public:
-			TraceLogger(std::string moduleName);
+			TraceLogger(std::string moduleName, opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts);
 	
 			~TraceLogger();
 	
@@ -21,9 +21,9 @@ namespace trace
 		        void TraceVerbose(std::string message, std::exception exception);
 	};
 	
-	TraceLogger::TraceLogger(std::string moduleName)
+	TraceLogger::TraceLogger(std::string moduleName, opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts)
 	{
-		otel::InitTracer();
+		otel::InitTracer(trace_opts);
 		_moduleName = moduleName;
 	}
 	
