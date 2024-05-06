@@ -111,3 +111,4 @@ nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string 
     auto provider = trace::Provider::GetTracerProvider();
     return provider->GetTracer(_moduleName, OPENTELEMETRY_SDK_VERSION);
   }
+}
