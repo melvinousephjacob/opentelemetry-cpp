@@ -43,10 +43,10 @@ namespace nostd = opentelemetry::nostd;
 
 namespace internal_log = opentelemetry::sdk::common::internal_log;
 
-namespace
+namespace otel
 {
-opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts;
-void InitTracer()
+//opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts;
+void InitTracer(opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts)
 {
   std::cout << "Using " << trace_opts.url << " to export trace spans." << std::endl;
   // Create OTLP exporter instance
@@ -72,8 +72,8 @@ void CleanupTracer()
   trace::Provider::SetTracerProvider(none);
 }
 
-opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
-void InitLogger()
+//opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
+void InitLogger(opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts)
 {
   std::cout << "Using " << logger_opts.url << " to export log records." << std::endl;
   logger_opts.console_debug = true;
@@ -108,6 +108,6 @@ nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string 
 
   nostd::shared_ptr<trace_api::Tracer> get_tracer(std::string _moduleName)
   {
-    auto provider = trace_api::Provider::GetTracerProvider();
+    auto provider = trace::Provider::GetTracerProvider();
     return provider->GetTracer(_moduleName, OPENTELEMETRY_SDK_VERSION);
   }
