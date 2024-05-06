@@ -8,7 +8,7 @@ namespace logging
 	class CentralLogServer : public ICentralLogServer
 	{
 		public:
-			CentralLogServer(std::string loggerName, std::string nameSpace, std::string className);
+			CentralLogServer(std::string loggerName, std::string nameSpace, std::string className, opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts);
 	
 			~CentralLogServer();
 	
@@ -19,9 +19,9 @@ namespace logging
 			void LogWithSeverity(nostd::shared_ptr<logs::Logger> logger, Severity severity, std::unordered_map<std::string, std::string> mymap, std::string message);
 	};
 	
-	CentralLogServer::CentralLogServer(std::string loggerName, std::string nameSpace, std::string className)
+	CentralLogServer::CentralLogServer(std::string loggerName, std::string nameSpace, std::string className, opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts)
 	{
-		otel::InitLogger();
+		otel::InitLogger(logger_opts);
 		logger = otel::get_logger(loggerName, nameSpace, className);
 	}
 	
