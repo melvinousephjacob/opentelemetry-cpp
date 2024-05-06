@@ -180,8 +180,8 @@ void CentralLogServer::Log(std::string message, Severity severity, InfoCategory 
 */
 int main(int argc, char *argv[])
 {
-  trace_opts.url  = "http://10.42.0.252:4318/v1/traces";
-  logger_opts.url = "http://10.42.0.252:4318/v1/logs";
+  trace_opts.url  = "http://10.42.0.15:4318/v1/traces";
+  logger_opts.url = "http://10.42.0.15:4318/v1/logs";
   auto centralLogServer = new CentralLogServer;
   CoreLogData coreLogData;
   coreLogData.Resolution = "Example core log data";
