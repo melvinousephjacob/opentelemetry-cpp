@@ -78,8 +78,8 @@ void CleanupMetrics()
 */
 int main(int argc, char *argv[])
 {
-  std::string example_type;
-  if (argc > 1)
+  //std::string example_type;
+  /*if (argc > 1)
   {
     exporter_options.url = argv[1];
   }
@@ -107,8 +107,12 @@ int main(int argc, char *argv[])
   if (exporter_options.console_debug)
   {
     internal_log::GlobalLogHandler::SetLogLevel(internal_log::LogLevel::Debug);
-  }
+  }*/
 
+  exporter_options.url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
+  std::string example_type{"all"};
+  exporter_options.console_debug = true;
+  internal_log::GlobalLogHandler::SetLogLevel(internal_log::LogLevel::Debug);
   // Removing this line will leave the default noop MetricProvider in place.
   InitMetrics();
   std::string name{"otlp_http_metric_example"};
