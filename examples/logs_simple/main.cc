@@ -13,7 +13,7 @@ int main()
   centralLogServer2->Log("This is a sample log message with Fatal severity", Fatal);
   centralLogServer3->Log("This is a sample log message with Error severity and OSEvent info category", Error, OSEvent);
 
-  auto traceLogger = new trace::TraceLogger("Sample module", trace_opts);
+  auto traceLogger = new trace::TraceLogger("Sample module");
   TraceData traceData;
   traceData.AdditionalInfo = "This is some additional info.";
   traceData.DateTime = std::time(0);
