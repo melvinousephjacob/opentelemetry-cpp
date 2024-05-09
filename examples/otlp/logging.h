@@ -12,9 +12,9 @@ namespace logging
 	
 			~CentralLogServer();
 	
-			void Log(std::string message, Severity severity, CoreLogData coreLogData);
-			void Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData);
-			void Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData);
+			void Log(std::string message, Severity severity);
+			void Log(std::string message, Severity severity, std::exception exception);
+			void Log(std::string message, Severity severity, InfoCategory infoCategory);
 		private:
 			void LogWithSeverity(nostd::shared_ptr<logs::Logger> logger, Severity severity, std::unordered_map<std::string, std::string> mymap, std::string message);
 	};
@@ -44,7 +44,7 @@ namespace logging
 			logger->Debug(message, mymap);
 	}
 	
-	void CentralLogServer::Log(std::string message, Severity severity, CoreLogData coreLogData)
+	void CentralLogServer::Log(std::string message, Severity severity)
 	{
 		//auto logger = otel::get_logger(_moduleName, _version);
 	
@@ -54,7 +54,7 @@ namespace logging
 		CentralLogServer::LogWithSeverity(logger, severity, mymap, message);
 	}
 	
-	void CentralLogServer::Log(std::string message, Severity severity, std::exception exception, CoreLogData coreLogData)
+	void CentralLogServer::Log(std::string message, Severity severity, std::exception exception)
 	{
 		//auto logger = otel::get_logger(_moduleName, _version);
 	
@@ -64,7 +64,7 @@ namespace logging
 		CentralLogServer::LogWithSeverity(logger, severity, mymap, message);
 	}
 	
-	void CentralLogServer::Log(std::string message, Severity severity, InfoCategory infoCategory, CoreLogData coreLogData)
+	void CentralLogServer::Log(std::string message, Severity severity, InfoCategory infoCategory)
 	{
 		//auto logger = otel::get_logger(_moduleName, _version);
 	
