@@ -1,9 +1,7 @@
 #include <string>
 
-class IDevicePropertyLogger
+class IMetricsLogger
 {
     public:
-        virtual ~IDevicePropertyLogger() {}
-
-        virtual bool Log(const std::string& textStr) = 0;
+        void Log(const std::string& textStr) = 0;
 };
