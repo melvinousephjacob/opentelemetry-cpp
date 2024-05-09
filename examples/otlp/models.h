@@ -5,7 +5,7 @@
 #include <ctime>
 #include <map>
 
-typedef enum InfoCategory
+enum InfoCategory
 {
     Nones = 0,
     OSEvent = 1,
@@ -24,7 +24,7 @@ typedef enum InfoCategory
     ApplicationEvent = 14
 };
 
-typedef enum Severity
+enum Severity
 {
     None = 0,
     DebugInfo = 1,
@@ -36,7 +36,7 @@ typedef enum Severity
     Hazard = 7
 };
 
-typedef enum LogType
+enum LogType
 {
     Trace = 0,
     Standard = 1,
