@@ -1,21 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#include "opentelemetry/exporters/otlp/otlp_http_metric_exporter_factory.h"
-#include "opentelemetry/exporters/otlp/otlp_http_metric_exporter_options.h"
-#include "opentelemetry/metrics/provider.h"
-#include "opentelemetry/sdk/common/global_log_handler.h"
-#include "opentelemetry/sdk/metrics/aggregation/default_aggregation.h"
-#include "opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h"
-#include "opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h"
-#include "opentelemetry/sdk/metrics/meter.h"
-#include "opentelemetry/sdk/metrics/meter_context_factory.h"
-#include "opentelemetry/sdk/metrics/meter_provider.h"
-#include "opentelemetry/sdk/metrics/meter_provider_factory.h"
-
-#include <memory>
-#include <thread>
-
 #ifdef BAZEL_BUILD
 #  include "examples/common/metrics_foo_library/foo_library.h"
 #else
