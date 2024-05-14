@@ -100,6 +100,36 @@ void CleanupLogger()
   opentelemetry::logs::Provider::SetLoggerProvider(none);
 }
 
+void InitMetrics(otlp_exporter::OtlpHttpMetricExporterOptions exporter_options)
+{
+  auto exporter = otlp_exporter::OtlpHttpMetricExporterFactory::Create(exporter_options);
+
+  std::string version{"1.2.0"};
+  std::string schema{"https://opentelemetry.io/schemas/1.2.0"};
+
+  // Initialize and set the global MeterProvider
+  metric_sdk::PeriodicExportingMetricReaderOptions reader_options;
+  reader_options.export_interval_millis = std::chrono::milliseconds(1000);
+  reader_options.export_timeout_millis  = std::chrono::milliseconds(500);
+
+  auto reader =
+      metric_sdk::PeriodicExportingMetricReaderFactory::Create(std::move(exporter), reader_options);
+
+  auto context = metric_sdk::MeterContextFactory::Create();
+  context->AddMetricReader(std::move(reader));
+
+  auto u_provider = metric_sdk::MeterProviderFactory::Create(std::move(context));
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider(std::move(u_provider));
+
+  metrics_api::Provider::SetMeterProvider(provider);
+}
+
+void CleanupMetrics()
+{
+  std::shared_ptr<metrics_api::MeterProvider> none;
+  metrics_api::Provider::SetMeterProvider(none);
+}
+
 nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string _nameSpace, std::string _className)
   {
     auto provider = logs::Provider::GetLoggerProvider();
