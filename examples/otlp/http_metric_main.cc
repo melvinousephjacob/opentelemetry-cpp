@@ -1,5 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
+#inlcude "otel.h"
 
 #ifdef BAZEL_BUILD
 #  include "examples/common/metrics_foo_library/foo_library.h"
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
   exporter_options.url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
   std::string example_type{"all"};
   // Removing this line will leave the default noop MetricProvider in place.
-  InitMetrics();
+  otel::InitMetrics();
   std::string name{"otlp_http_metric_example"};
 
   /*if (example_type == "counter")
@@ -73,5 +74,5 @@ int main(int argc, char *argv[])
   }*/
 
   foo_library::observable_counter_example(name);
-  CleanupMetrics();
+  otel::CleanupMetrics();
 }
