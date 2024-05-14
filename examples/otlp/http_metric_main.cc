@@ -7,13 +7,6 @@
 #  include "metrics_foo_library/foo_library.h"
 #endif
 
-namespace metric_sdk    = opentelemetry::sdk::metrics;
-namespace common        = opentelemetry::common;
-namespace metrics_api   = opentelemetry::metrics;
-namespace otlp_exporter = opentelemetry::exporter::otlp;
-
-namespace internal_log = opentelemetry::sdk::common::internal_log;
-
 int main(int argc, char *argv[])
 {
   //std::string example_type;
