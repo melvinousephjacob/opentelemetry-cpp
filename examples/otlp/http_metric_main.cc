@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
   InitMetrics();
   std::string name{"otlp_http_metric_example"};
 
-  if (example_type == "counter")
+  /*if (example_type == "counter")
   {
     foo_library::counter_example(name);
   }
@@ -139,7 +139,8 @@ int main(int argc, char *argv[])
     counter_example.join();
     observable_counter_example.join();
     histogram_example.join();
-  }
+  }*/
 
+  foo_library::observable_counter_example(name);
   CleanupMetrics();
 }
