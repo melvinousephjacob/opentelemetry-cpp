@@ -29,53 +29,6 @@ namespace otlp_exporter = opentelemetry::exporter::otlp;
 
 namespace internal_log = opentelemetry::sdk::common::internal_log;
 
-namespace
-{
-
-otlp_exporter::OtlpHttpMetricExporterOptions exporter_options;
-
-void InitMetrics()
-{
-  auto exporter = otlp_exporter::OtlpHttpMetricExporterFactory::Create(exporter_options);
-
-  std::string version{"1.2.0"};
-  std::string schema{"https://opentelemetry.io/schemas/1.2.0"};
-
-  // Initialize and set the global MeterProvider
-  metric_sdk::PeriodicExportingMetricReaderOptions reader_options;
-  reader_options.export_interval_millis = std::chrono::milliseconds(1000);
-  reader_options.export_timeout_millis  = std::chrono::milliseconds(500);
-
-  auto reader =
-      metric_sdk::PeriodicExportingMetricReaderFactory::Create(std::move(exporter), reader_options);
-
-  auto context = metric_sdk::MeterContextFactory::Create();
-  context->AddMetricReader(std::move(reader));
-
-  auto u_provider = metric_sdk::MeterProviderFactory::Create(std::move(context));
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider(std::move(u_provider));
-
-  metrics_api::Provider::SetMeterProvider(provider);
-}
-
-void CleanupMetrics()
-{
-  std::shared_ptr<metrics_api::MeterProvider> none;
-  metrics_api::Provider::SetMeterProvider(none);
-}
-}  // namespace
-
-/*
-  Usage:
-  - example_otlp_http_metric
-  - example_otlp_http_metric <URL>
-  - example_otlp_http_metric <URL> <EXAMPLE>
-  - example_otlp_http_metric <URL> <EXAMPLE> <DEBUG>
-  - example_otlp_http_metric <URL> <EXAMPLE> <DEBUG> <BIN>
-  <EXAMPLE> = counter|observable_counter|histogram|all
-  <DEBUG> = yes|no, to turn console debug on or off
-  <BIN> = bin, to export in binary format
-*/
 int main(int argc, char *argv[])
 {
   //std::string example_type;
