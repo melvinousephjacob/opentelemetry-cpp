@@ -5,7 +5,7 @@ namespace metrics
   class MetricsLogger : public IMetricsLogger
 	{
 		public:
-			MetricsLogger(std::string loggerName, std::string nameSpace, std::string className, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts);
+			MetricsLogger(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts);
 	
 			~MetricsLogger();
 	
