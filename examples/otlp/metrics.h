@@ -25,7 +25,7 @@ MetricsLogger::~MetricsLogger()
 	otel::CleanupMetrics();
 }
 
-MetricsLogger::Log(std::string textStr)
+void MetricsLogger::Log(std::string textStr)
 {
 	meter->Add(1);
 }
