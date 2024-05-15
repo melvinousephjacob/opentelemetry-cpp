@@ -160,4 +160,15 @@ nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string 
     auto provider = trace::Provider::GetTracerProvider();
     return provider->GetTracer(_moduleName, OPENTELEMETRY_SDK_VERSION);
   }
+
+nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> get_meter(std::string fruName, std::string propertyName, std::string propertyDescription)
+{
+  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
+  auto provider                               = metrics_api::Provider::GetMeterProvider();
+  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0");
+  auto int_counter                         = meter->CreateUInt64Counter(counter_name, propertyDescription);
+
+  return int_counter;
+}
+
 }
