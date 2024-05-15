@@ -1,5 +1,5 @@
-#include "imetricslogger.h"
 #include "otel.h"
+#include "imetricslogger.h"
 
 namespace metrics
 {
