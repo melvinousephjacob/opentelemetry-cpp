@@ -119,9 +119,9 @@ void CleanupLogger()
   opentelemetry::logs::Provider::SetLoggerProvider(none);
 }
 
-void InitMetrics(otlp_exporter::OtlpHttpMetricExporterOptions exporter_options)
+void InitMetrics(opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options)
 {
-  auto exporter = otlp_exporter::OtlpHttpMetricExporterFactory::Create(exporter_options);
+  auto exporter = opentelemetry::exporter::otlp::OtlpHttpMetricExporterFactory::Create(exporter_options);
 
   std::string version{"1.2.0"};
   std::string schema{"https://opentelemetry.io/schemas/1.2.0"};
