@@ -1,4 +1,4 @@
-#include "otel.h"
+#include "otel_metrics.h"
 
 namespace metrics
 {
@@ -15,13 +15,13 @@ namespace metrics
 
 MetricsLogger::MetricsLogger(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts)
 {
-	otel::InitMetrics(metrics_opts);
-	meter = otel::get_meter(fruName, propertyName, propertyDescription);
+	otel_metrics::InitMetrics(metrics_opts);
+	meter = otel_metrics::get_meter(fruName, propertyName, propertyDescription);
 }
 
 MetricsLogger::~MetricsLogger()
 {
-	otel::CleanupMetrics();
+	otel_metrics::CleanupMetrics();
 }
 
 void MetricsLogger::Log(std::string textStr)
