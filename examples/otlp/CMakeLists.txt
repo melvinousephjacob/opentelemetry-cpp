@@ -70,7 +70,7 @@ if(WITH_OTLP_HTTP)
 
   # METRIC
 
-  add_executable(example_otlp_http_metric http_metric_main.cc)
+  add_executable(example_otlp_http_metric metrics_main.cc)
   target_link_libraries(example_otlp_http_metric ${CMAKE_THREAD_LIBS_INIT}
                         common_metrics_foo_library)
 
