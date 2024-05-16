@@ -32,6 +32,14 @@
 #include "opentelemetry/sdk/metrics/meter_context_factory.h"
 #include "opentelemetry/sdk/metrics/meter_provider.h"
 #include "opentelemetry/sdk/metrics/meter_provider_factory.h"
+#include <chrono>
+#include <map>
+#include <memory>
+#include <thread>
+#include <vector>
+#include "opentelemetry/context/context.h"
+#include "opentelemetry/metrics/provider.h"
+#include "opentelemetry/nostd/shared_ptr.h"
 
 #include <memory>
 #include <thread>
