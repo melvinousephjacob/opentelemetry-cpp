@@ -127,37 +127,6 @@ void CleanupLogger()
   std::shared_ptr<logs::LoggerProvider> none;
   opentelemetry::logs::Provider::SetLoggerProvider(none);
 }
-
-void InitMetrics(opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options)
-{
-  auto exporter = opentelemetry::exporter::otlp::OtlpHttpMetricExporterFactory::Create(exporter_options);
-
-  std::string version{"1.2.0"};
-  std::string schema{"https://opentelemetry.io/schemas/1.2.0"};
-
-  // Initialize and set the global MeterProvider
-  metric_sdk::PeriodicExportingMetricReaderOptions reader_options;
-  reader_options.export_interval_millis = std::chrono::milliseconds(1000);
-  reader_options.export_timeout_millis  = std::chrono::milliseconds(500);
-
-  auto reader =
-      metric_sdk::PeriodicExportingMetricReaderFactory::Create(std::move(exporter), reader_options);
-
-  auto context = metric_sdk::MeterContextFactory::Create();
-  context->AddMetricReader(std::move(reader));
-
-  auto u_provider = metric_sdk::MeterProviderFactory::Create(std::move(context));
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider(std::move(u_provider));
-
-  metrics_api::Provider::SetMeterProvider(provider);
-}
-
-void CleanupMetrics()
-{
-  std::shared_ptr<metrics_api::MeterProvider> none;
-  metrics_api::Provider::SetMeterProvider(none);
-}
-
 nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string _nameSpace, std::string _className)
   {
     auto provider = logs::Provider::GetLoggerProvider();
@@ -169,15 +138,4 @@ nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string 
     auto provider = trace::Provider::GetTracerProvider();
     return provider->GetTracer(_moduleName, OPENTELEMETRY_SDK_VERSION);
   }
-
-nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> get_meter(std::string fruName, std::string propertyName, std::string propertyDescription)
-{
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
-  auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
-  auto int_counter                         = meter->CreateUInt64Counter(counter_name, propertyDescription);
-
-  return int_counter;
-}
-
 }
