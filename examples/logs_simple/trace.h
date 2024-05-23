@@ -59,16 +59,16 @@ namespace trace
 		std::unordered_map<std::string, std::string> mymap;
 		mymap["description"] = message;
 		mymap["NameSpace"] = "Sample namespace";
-		mymap["AdditionalInfo"] = traceData.AdditionalInfo.empty() ? traceData.AdditionalInfo: "";
-		mymap["ContextInfo"] = traceData.ContextInfo.empty() ? traceData.ContextInfo: "";
+		mymap["AdditionalInfo"] = !traceData.AdditionalInfo.empty() ? traceData.AdditionalInfo: "";
+		mymap["ContextInfo"] = !traceData.ContextInfo.empty() ? traceData.ContextInfo: "";
 
 		std::stringstream ss;
 		ss << traceData.DateTime;
 		std::string ts = ss.str();
-		mymap["DateTime"] = ts.empty() ? ts: "";
-		mymap["EventType"] = traceData.EventType.empty() ? traceData.EventType: "";
-		mymap["ExceptionInfo"] = traceData.ExceptionInfo.empty() ? traceData.ExceptionInfo: "";
-		mymap["StackTrace"] = traceData.StackTrace.empty() ? traceData.StackTrace: "";
+		mymap["DateTime"] = !ts.empty() ? ts: "";
+		mymap["EventType"] = !traceData.EventType.empty() ? traceData.EventType: "";
+		mymap["ExceptionInfo"] = !traceData.ExceptionInfo.empty() ? traceData.ExceptionInfo: "";
+		mymap["StackTrace"] = !traceData.StackTrace.empty() ? traceData.StackTrace: "";
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
 
@@ -89,16 +89,16 @@ namespace trace
 		std::unordered_map<std::string, std::string> mymap;
 		mymap["description"] = message;
 		mymap["NameSpace"] = "Sample namespace";
-		mymap["AdditionalInfo"] = traceData.AdditionalInfo.empty() ? traceData.AdditionalInfo: "";
-		mymap["ContextInfo"] = traceData.ContextInfo.empty() ? traceData.ContextInfo: "";
+		mymap["AdditionalInfo"] = !traceData.AdditionalInfo.empty() ? traceData.AdditionalInfo: "";
+		mymap["ContextInfo"] = !traceData.ContextInfo.empty() ? traceData.ContextInfo: "";
 
 		std::stringstream ss;
 		ss << traceData.DateTime;
 		std::string ts = ss.str();
-		mymap["DateTime"] = ts.empty() ? ts: "";
-		mymap["EventType"] = traceData.EventType.empty() ? traceData.EventType: "";
-		mymap["ExceptionInfo"] = traceData.ExceptionInfo.empty() ? traceData.ExceptionInfo: "";
-		mymap["StackTrace"] = traceData.StackTrace.empty() ? traceData.StackTrace: "";
+		mymap["DateTime"] = !ts.empty() ? ts: "";
+		mymap["EventType"] = !traceData.EventType.empty() ? traceData.EventType: "";
+		mymap["ExceptionInfo"] = !traceData.ExceptionInfo.empty() ? traceData.ExceptionInfo: "";
+		mymap["StackTrace"] = !traceData.StackTrace.empty() ? traceData.StackTrace: "";
 		auto scoped_span = opentelemetry::trace::Scope(tracer->StartSpan(_moduleName, mymap));
 	}
 
