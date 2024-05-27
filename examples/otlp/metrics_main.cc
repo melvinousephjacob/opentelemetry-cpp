@@ -4,10 +4,9 @@
 
 int main()
 {
-  opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options;
-  exporter_options.url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
+  std::string metrics_exporter_url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
 
-  auto meter = new metrics::MetricsLogger("Sample_FRU_Name", "Sample_Property_Name", "This is a sample property description", exporter_options);
+  auto meter = new metrics::MetricsLogger("Sample_FRU_Name", "Sample_Property_Name", "This is a sample property description", metrics_exporter_url);
 
   meter->Log("Hello");
 }
