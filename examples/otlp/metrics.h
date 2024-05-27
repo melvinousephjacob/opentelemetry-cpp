@@ -3,28 +3,28 @@
 namespace metrics
 {
   nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> meter;
-  class MetricsLogger : public IMetricsLogger
+  class MetricsCounterLogger : public IMetricsLogger
 	{
 		public:
-			MetricsLogger(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts);
+			MetricsCounterLogger(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts);
 	
-			~MetricsLogger();
+			~MetricsCounterLogger();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsLogger::MetricsLogger(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts)
+MetricsCounterLogger::MetricsCounterLogger(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions metrics_opts)
 {
 	otel_metrics::InitMetrics(metrics_opts);
-	meter = otel_metrics::get_meter(fruName, propertyName, propertyDescription);
+	meter = otel_metrics::get_counter(fruName, propertyName, propertyDescription);
 }
 
-MetricsLogger::~MetricsLogger()
+MetricsCounterLogger::~MetricsCounterLogger()
 {
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsLogger::Log(std::string textStr)
+void MetricsCounterLogger::Log(std::string textStr)
 {
 	meter->Add(1);
 }
