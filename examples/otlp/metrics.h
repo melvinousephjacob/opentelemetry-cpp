@@ -14,18 +14,18 @@ namespace metrics
   class MetricsCounter : public IMetricsLogger
 	{
 		public:
-			MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url);
+			MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsCounter();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url)
+MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
 	exporter_options.url = metrics_url;
 	otel_metrics::InitMetrics(exporter_options);
-	meter = otel_metrics::get_counter(fruName, propertyName, propertyDescription);
+	counter = otel_metrics::get_counter(fruName, propertyName, propertyDescription);
 }
 
 MetricsCounter::~MetricsCounter()
@@ -35,25 +35,25 @@ MetricsCounter::~MetricsCounter()
 
 void MetricsCounter::Log(std::string textStr)
 {
-	meter->Add(1);
+	counter->Add(1);
 }
 
 ///////////////////////////////////////////////OBSERVABLE COUNTER/////////////////////////////////////////
 class MetricsObservableCounter : public IMetricsLogger
 	{
 		public:
-			MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url);
+			MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsObservableCounter();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsObservableCounter::MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url)
+MetricsObservableCounter::MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
 	exporter_options.url = metrics_url;
 	otel_metrics::InitMetrics(exporter_options);
-	meter = otel_metrics::get_observablecounter(fruName, propertyName, propertyDescription);
+	observablecounter = otel_metrics::get_observablecounter(fruName, propertyName, propertyDescription);
 }
 
 MetricsObservableCounter::~MetricsObservableCounter()
@@ -71,18 +71,18 @@ void MetricsObservableCounter::Log(std::string textStr)
 class MetricsHistogram : public IMetricsLogger
 	{
 		public:
-			MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url);
+			MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsHistogram();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsHistogram::MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url)
+MetricsHistogram::MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
 	exporter_options.url = metrics_url;
 	otel_metrics::InitMetrics(exporter_options);
-	meter = otel_metrics::get_histogram(fruName, propertyName, propertyDescription);
+	histogram = otel_metrics::get_histogram(fruName, propertyName, propertyDescription);
 }
 
 MetricsHistogram::~MetricsHistogram()
@@ -100,18 +100,18 @@ void MetricsHistogram::Log(std::string textStr)
 class MetricsObservableGauge : public IMetricsLogger
 	{
 		public:
-			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url);
+			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsObservableGauge();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url)
+MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
 	exporter_options.url = metrics_url;
 	otel_metrics::InitMetrics(exporter_options);
-	meter = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription);
+	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription);
 }
 
 MetricsObservableGauge::~MetricsObservableGauge()
@@ -129,18 +129,18 @@ void MetricsObservableGauge::Log(std::string textStr)
 class MetricsUpDownCounter : public IMetricsLogger
 	{
 		public:
-			MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url);
+			MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsUpDownCounter();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsUpDownCounter::MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url)
+MetricsUpDownCounter::MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
 	exporter_options.url = metrics_url;
 	otel_metrics::InitMetrics(exporter_options);
-	meter = otel_metrics::get_updowncounter(fruName, propertyName, propertyDescription);
+	updowncounter = otel_metrics::get_updowncounter(fruName, propertyName, propertyDescription);
 }
 
 MetricsUpDownCounter::~MetricsUpDownCounter()
@@ -158,18 +158,18 @@ void MetricsUpDownCounter::Log(std::string textStr)
 class MetricsObservableUpDownCounter : public IMetricsLogger
 	{
 		public:
-			MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url);
+			MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsObservableUpDownCounter();
 	
 			void Log(std::string textStr);
 	};
 
-MetricsObservableUpDownCounter::MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, metrics_url)
+MetricsObservableUpDownCounter::MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
 	exporter_options.url = metrics_url;
 	otel_metrics::InitMetrics(exporter_options);
-	meter = otel_metrics::get_observableupdowncounter(fruName, propertyName, propertyDescription);
+	observableupdowncounter = otel_metrics::get_observableupdowncounter(fruName, propertyName, propertyDescription);
 }
 
 MetricsObservableUpDownCounter::~MetricsObservableUpDownCounter()
