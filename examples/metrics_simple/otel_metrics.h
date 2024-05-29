@@ -36,15 +36,13 @@
 #endif
 
 namespace trace     = opentelemetry::trace;
-namespace otlp      = opentelemetry::exporter::otlp;
-namespace logs_sdk  = opentelemetry::sdk::logs;
-namespace logs      = opentelemetry::logs;
-namespace trace_sdk = opentelemetry::sdk::trace;
 namespace nostd = opentelemetry::nostd;
 
 namespace metric_sdk    = opentelemetry::sdk::metrics;
 namespace common        = opentelemetry::common;
 namespace metrics_api   = opentelemetry::metrics;
+namespace exportermetrics = opentelemetry::exporter::metrics;
+namespace metrics_sdk     = opentelemetry::sdk::metrics;
 
 namespace internal_log = opentelemetry::sdk::common::internal_log;
 
@@ -124,6 +122,7 @@ void InitMetrics(const std::string &name)
 
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider(std::move(u_provider));
   metrics_api::Provider::SetMeterProvider(provider);
+}
 
 void CleanupMetrics()
 {
