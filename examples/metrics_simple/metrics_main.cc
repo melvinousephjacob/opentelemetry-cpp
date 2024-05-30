@@ -13,5 +13,5 @@ int main()
 
   auto observableUpDownCounter = new metrics::MetricsObservableUpDownCounter("Sample_ObservableUpDownCounter", "Sample_Property_Name", "This is a sample observable up down counter");
 
-  auto histogram - new metrics::MetricsHistogram("Sample_Histogram", "Sample_Property_Name", "This is a sample histogram");
+  auto histogram = new metrics::MetricsHistogram("Sample_Histogram", "Sample_Property_Name", "This is a sample histogram");
 }
