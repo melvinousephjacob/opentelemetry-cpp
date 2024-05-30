@@ -193,6 +193,7 @@ nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
   auto int_histogram                         = meter->CreateUInt64Histogram(counter_name, propertyDescription);
+  int_histogram->Record(25);
 
   return int_histogram;
 }
