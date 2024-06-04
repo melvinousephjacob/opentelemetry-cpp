@@ -15,7 +15,7 @@ int main()
   auto observableGauge = new MetricsObservableGauge("Sample_ObservableGauge", "Sample_Property_Name", "This is a sample observable gauge");
 
   auto updowncounter = new MetricsUpDownCounter("Sample_UpDownCounter", "Sample_Property_Name", "This is a sample up down counter");
-  updowncounter->Log("Hello");
+  updowncounter->Log();
 
   auto observableUpDownCounter = new MetricsObservableUpDownCounter("Sample_ObservableUpDownCounter", "Sample_Property_Name", "This is a sample observable up down counter");
 
