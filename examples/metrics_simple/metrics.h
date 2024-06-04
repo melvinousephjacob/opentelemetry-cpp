@@ -17,7 +17,7 @@ namespace metrics
 	
 			~MetricsCounter();
 	
-			void Log(std::string textStr);
+			static void Log(std::string &textStr);
 	};
 
 MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
