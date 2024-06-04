@@ -4,7 +4,7 @@
 
 int main()
 {
-  std::string a {"Hello"};
+  std::string a{"Hello"};
   auto counter = new metrics::MetricsCounter("Sample_FRU_Name", "Sample_Property_Name", "This is a sample property description");
   std::thread counter_example{&metrics::MetricsCounter::Log, a};
   //counter->Log("Hello");
