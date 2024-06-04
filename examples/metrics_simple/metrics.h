@@ -17,7 +17,7 @@ namespace metrics
 	
 			~MetricsCounter();
 	
-			void Log(std::string textStr);
+			void Log();
 	};
 
 MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
@@ -31,7 +31,7 @@ MetricsCounter::~MetricsCounter()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsCounter::Log(std::string textStr)
+void MetricsCounter::Log()
 {
 	for (uint32_t i = 0; i < 20; ++i)
   	{
@@ -48,7 +48,7 @@ class MetricsObservableCounter : public IMetricsLogger
 	
 			~MetricsObservableCounter();
 	
-			void Log(std::string textStr);
+			void Log();
 	};
 
 MetricsObservableCounter::MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
@@ -62,7 +62,7 @@ MetricsObservableCounter::~MetricsObservableCounter()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsObservableCounter::Log(std::string textStr)
+void MetricsObservableCounter::Log()
 {
 	
 }
@@ -76,7 +76,7 @@ class MetricsHistogram : public IMetricsLogger
 	
 			~MetricsHistogram();
 	
-			void Log(std::string textStr);
+			void Log();
 	};
 
 MetricsHistogram::MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription)
@@ -90,7 +90,7 @@ MetricsHistogram::~MetricsHistogram()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsHistogram::Log(std::string textStr)
+void MetricsHistogram::Log()
 {
 	auto context           = opentelemetry::context::Context{};
 	for (uint32_t i = 0; i < 20; ++i)
@@ -109,7 +109,7 @@ class MetricsObservableGauge : public IMetricsLogger
 	
 			~MetricsObservableGauge();
 	
-			void Log(std::string textStr);
+			void Log();
 	};
 
 MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription)
@@ -123,7 +123,7 @@ MetricsObservableGauge::~MetricsObservableGauge()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsObservableGauge::Log(std::string textStr)
+void MetricsObservableGauge::Log()
 {
 	
 }
@@ -137,7 +137,7 @@ class MetricsUpDownCounter : public IMetricsLogger
 	
 			~MetricsUpDownCounter();
 	
-			void Log(std::string textStr);
+			void Log();
 	};
 
 MetricsUpDownCounter::MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
@@ -151,7 +151,7 @@ MetricsUpDownCounter::~MetricsUpDownCounter()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsUpDownCounter::Log(std::string textStr)
+void MetricsUpDownCounter::Log()
 {
 	for (uint32_t i = 0; i < 20; ++i)
   	{
@@ -169,7 +169,7 @@ class MetricsObservableUpDownCounter : public IMetricsLogger
 	
 			~MetricsObservableUpDownCounter();
 	
-			void Log(std::string textStr);
+			void Log();
 	};
 
 MetricsObservableUpDownCounter::MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
@@ -183,7 +183,7 @@ MetricsObservableUpDownCounter::~MetricsObservableUpDownCounter()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsObservableUpDownCounter::Log(std::string textStr)
+void MetricsObservableUpDownCounter::Log()
 {
 	
 }
