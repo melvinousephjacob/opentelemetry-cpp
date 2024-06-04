@@ -1,6 +1,6 @@
 #include "otel_metrics.h"
 
-namespace metrics
+namespace
 {
   nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> counter;
   nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> observablecounter;
