@@ -4,11 +4,11 @@
 
 int main()
 {
-  std::string a{"Hello"};
+  //std::string a{"Hello"};
   auto counter = new MetricsCounter("Sample_FRU_Name", "Sample_Property_Name", "This is a sample property description");
-  MetricsCounter x;
-  std::thread counter_example (&MetricsCounter::Log, std::ref(x));
-  //counter->Log("Hello");
+  //MetricsCounter x;
+  //std::thread counter_example (&MetricsCounter::Log, std::ref(x));
+  counter->Log();
 
   //auto observableCounter = new metrics::MetricsObservableCounter("Sample_ObservableCounter", "Sample_Property_Name", "This is a sample observable counter");
 
@@ -23,10 +23,10 @@ int main()
   //metrics::MetricsHistogram y;
   //std::thread counter_example{&foo_library::counter_example, name};
   //std::thread observable_counter_example{&foo_library::observable_counter_example, name};
-  std::thread histogram_example{&MetricsHistogram::Log};
+  //std::thread histogram_example{&MetricsHistogram::Log};
 
-  counter_example.join();
+  //counter_example.join();
   //observable_counter_example.join();
-  histogram_example.join();
-  //histogram->Log("Hello");
+  //histogram_example.join();
+  histogram->Log();
 }
