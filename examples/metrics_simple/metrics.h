@@ -88,7 +88,7 @@ MetricsHistogram::~MetricsHistogram()
 
 void MetricsHistogram::Log(std::string textStr)
 {
-	
+	histogram->Record(25);
 }
 
 
@@ -144,7 +144,7 @@ MetricsUpDownCounter::~MetricsUpDownCounter()
 
 void MetricsUpDownCounter::Log(std::string textStr)
 {
-	
+	updowncounter->Add(2);
 }
 
 
