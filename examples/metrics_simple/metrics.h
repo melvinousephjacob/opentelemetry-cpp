@@ -31,7 +31,7 @@ MetricsCounter::~MetricsCounter()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsCounter::Log(std::string textStr)
+void MetricsCounter::Log(const std::string &textStr)
 {
 	for (uint32_t i = 0; i < 20; ++i)
   	{
@@ -90,7 +90,7 @@ MetricsHistogram::~MetricsHistogram()
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsHistogram::Log(std::string textStr)
+void MetricsHistogram::Log(const std::string &textStr)
 {
 	auto context           = opentelemetry::context::Context{};
 	for (uint32_t i = 0; i < 20; ++i)
