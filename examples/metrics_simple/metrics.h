@@ -88,7 +88,8 @@ MetricsHistogram::~MetricsHistogram()
 
 void MetricsHistogram::Log(std::string textStr)
 {
-	histogram->Record(25);
+	auto context           = opentelemetry::context::Context{};
+	histogram->Record(25, context);
 }
 
 
