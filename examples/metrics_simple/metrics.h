@@ -33,7 +33,11 @@ MetricsCounter::~MetricsCounter()
 
 void MetricsCounter::Log(std::string textStr)
 {
-	counter->Add(1);
+	for (uint32_t i = 0; i < 20; ++i)
+  	{
+		counter->Add(1);
+    	  	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  	}
 }
 
 ///////////////////////////////////////////////OBSERVABLE COUNTER/////////////////////////////////////////
@@ -89,7 +93,11 @@ MetricsHistogram::~MetricsHistogram()
 void MetricsHistogram::Log(std::string textStr)
 {
 	auto context           = opentelemetry::context::Context{};
-	histogram->Record(25, context);
+	for (uint32_t i = 0; i < 20; ++i)
+  	{
+		histogram->Record(25, context);
+    	  	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  	}
 }
 
 
@@ -145,7 +153,11 @@ MetricsUpDownCounter::~MetricsUpDownCounter()
 
 void MetricsUpDownCounter::Log(std::string textStr)
 {
-	updowncounter->Add(2);
+	for (uint32_t i = 0; i < 20; ++i)
+  	{
+		updowncounter->Add(2);
+    	  	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  	}
 }
 
 
