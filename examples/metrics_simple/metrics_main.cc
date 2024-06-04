@@ -6,8 +6,8 @@ int main()
 {
   std::string a{"Hello"};
   auto counter = new metrics::MetricsCounter("Sample_FRU_Name", "Sample_Property_Name", "This is a sample property description");
-  metrics::MetricsCounter x;
-  std::thread counter_example (&metrics::MetricsCounter::Log, &x, a);
+  //metrics::MetricsCounter x;
+  std::thread counter_example (&metrics::MetricsCounter::Log, &counter, a);
   //counter->Log("Hello");
 
   //auto observableCounter = new metrics::MetricsObservableCounter("Sample_ObservableCounter", "Sample_Property_Name", "This is a sample observable counter");
@@ -20,10 +20,10 @@ int main()
   //auto observableUpDownCounter = new metrics::MetricsObservableUpDownCounter("Sample_ObservableUpDownCounter", "Sample_Property_Name", "This is a sample observable up down counter");
 
   auto histogram = new metrics::MetricsHistogram("Sample_Histogram", "Sample_Property_Name", "This is a sample histogram");
-  metrics::MetricsHistogram y;
+  //metrics::MetricsHistogram y;
   //std::thread counter_example{&foo_library::counter_example, name};
   //std::thread observable_counter_example{&foo_library::observable_counter_example, name};
-  std::thread histogram_example{&metrics::MetricsHistogram::Log, &y, a};
+  std::thread histogram_example{&metrics::MetricsHistogram::Log, &histogram, a};
 
   counter_example.join();
   //observable_counter_example.join();
