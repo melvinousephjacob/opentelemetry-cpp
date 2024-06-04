@@ -4,5 +4,5 @@
 class IMetricsLogger
 {
     public:
-        void Log(const std::string& textStr);
+        static void Log(const std::string& textStr);
 };
