@@ -12,7 +12,7 @@ int main()
 
   auto observableCounter = new MetricsObservableCounter("Sample_ObservableCounter", "Sample_Property_Name", "This is a sample observable counter");
 
-  auto observableGauge = new MetricsObservableGauge("Sample_ObservableGauge", "Sample_Property_Name", "This is a sample observable gauge");
+  auto observableGauge = new MetricsObservableGauge("Sample_ObservableGauge", "Sample_Property_Name", "This is a sample observable gauge", otel_metrics::MeasurementFetcher::Fetcher);
 
   for (uint32_t i = 0; i < 20; ++i)
   {
