@@ -105,17 +105,17 @@ void MetricsHistogram::Log()
 class MetricsObservableGauge : public IMetricsLogger
 	{
 		public:
-			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription);
+			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription,  opentelemetry::metrics::ObservableCallbackPtr callback);
 	
 			~MetricsObservableGauge();
 	
 			void Log();
 	};
 
-MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription)
+MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
 	otel_metrics::InitMetrics(fruName);
-	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription);
+	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, callback);
 }
 
 MetricsObservableGauge::~MetricsObservableGauge()
