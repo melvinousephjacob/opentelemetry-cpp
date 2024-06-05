@@ -179,10 +179,6 @@ nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observableco
   auto double_observablecounter                         = meter->CreateDoubleObservableCounter(counter_name, propertyDescription);
 
   double_observablecounter->AddCallback(MeasurementFetcher::Fetcher, nullptr);
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  }
 
   return double_observablecounter;
 }
@@ -205,10 +201,6 @@ nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablega
   auto double_observablegauge                         = meter->CreateDoubleObservableGauge(counter_name, propertyDescription);
 
   double_observablegauge->AddCallback(MeasurementFetcher::Fetcher, nullptr);
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  }
 
   return double_observablegauge;
 }
@@ -231,10 +223,6 @@ nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observableup
   auto double_observableupdowncounter                         = meter->CreateDoubleObservableUpDownCounter(counter_name, propertyDescription);
 
   double_observableupdowncounter->AddCallback(MeasurementFetcher::Fetcher, nullptr);
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  }
 
   return double_observableupdowncounter;
 }
