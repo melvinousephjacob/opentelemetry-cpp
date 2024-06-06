@@ -44,6 +44,31 @@
 #include <memory>
 #include <thread>
 
+#include "opentelemetry/exporters/ostream/metric_exporter_factory.h"
+#include "opentelemetry/metrics/provider.h"
+#include "opentelemetry/sdk/metrics/aggregation/default_aggregation.h"
+#include "opentelemetry/sdk/metrics/aggregation/histogram_aggregation.h"
+#include "opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h"
+#include "opentelemetry/sdk/metrics/meter.h"
+#include "opentelemetry/sdk/metrics/meter_provider.h"
+#include "opentelemetry/sdk/metrics/meter_provider_factory.h"
+#include "opentelemetry/sdk/metrics/push_metric_exporter.h"
+#include "opentelemetry/sdk/metrics/view/instrument_selector_factory.h"
+#include "opentelemetry/sdk/metrics/view/meter_selector_factory.h"
+#include "opentelemetry/sdk/metrics/view/view_factory.h"
+#include <chrono>
+#include <thread>
+
+#include "imetricslogger.h"
+#include <chrono>
+#include <map>
+#include <memory>
+#include <thread>
+#include <vector>
+#include "opentelemetry/context/context.h"
+#include "opentelemetry/metrics/provider.h"
+#include "opentelemetry/nostd/shared_ptr.h"
+
 // sdk::TracerProvider and sdk::LoggerProvider is just used to call ForceFlush and prevent to cancel
 // running exportings when destroy and shutdown exporters.It's optional to users.
 #include "opentelemetry/sdk/logs/logger_provider.h"
