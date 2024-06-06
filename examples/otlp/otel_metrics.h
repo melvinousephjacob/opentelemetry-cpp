@@ -65,7 +65,7 @@ namespace logs      = opentelemetry::logs;
 namespace trace_sdk = opentelemetry::sdk::trace;
 namespace nostd = opentelemetry::nostd;
 
-namespace metric_sdk    = opentelemetry::sdk::metrics;
+namespace metrics_sdk    = opentelemetry::sdk::metrics;
 namespace common        = opentelemetry::common;
 namespace metrics_api   = opentelemetry::metrics;
 
