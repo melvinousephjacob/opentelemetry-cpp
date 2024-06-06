@@ -44,7 +44,6 @@
 #include <memory>
 #include <thread>
 
-#include "opentelemetry/exporters/ostream/metric_exporter_factory.h"
 #include "opentelemetry/metrics/provider.h"
 #include "opentelemetry/sdk/metrics/aggregation/default_aggregation.h"
 #include "opentelemetry/sdk/metrics/aggregation/histogram_aggregation.h"
