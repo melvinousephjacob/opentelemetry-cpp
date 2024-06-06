@@ -3,6 +3,7 @@
 
 namespace
 {
+  opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options;
   nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> counter;
   nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> observablecounter;
   nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> histogram;
@@ -14,16 +15,17 @@ namespace
   class MetricsCounter : public IMetricsLogger
 	{
 		public:
-			MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription);
+			MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsCounter();
 	
 			void Log();
 	};
 
-MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
+MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
-	otel_metrics::InitMetrics(fruName);
+	exporter_options.url = metrics_url;
+	otel_metrics::InitMetrics(fruName, exporter_options);
 	counter = otel_metrics::get_counter(fruName, propertyName, propertyDescription);
 }
 
@@ -45,16 +47,17 @@ void MetricsCounter::Log()
 class MetricsObservableCounter : public IMetricsLogger
 	{
 		public:
-			MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription);
+			MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsObservableCounter();
 	
 			void Log();
 	};
 
-MetricsObservableCounter::MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
+MetricsObservableCounter::MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
-	otel_metrics::InitMetrics(fruName);
+	exporter_options.url = metrics_url;
+	otel_metrics::InitMetrics(fruName, exporter_options);
 	observablecounter = otel_metrics::get_observablecounter(fruName, propertyName, propertyDescription);
 }
 
@@ -73,16 +76,17 @@ void MetricsObservableCounter::Log()
 class MetricsHistogram : public IMetricsLogger
 	{
 		public:
-			MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription);
+			MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsHistogram();
 	
 			void Log();
 	};
 
-MetricsHistogram::MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription)
+MetricsHistogram::MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
-	otel_metrics::InitMetrics(fruName);
+	exporter_options.url = metrics_url;
+	otel_metrics::InitMetrics(fruName, exporter_options);
 	histogram = otel_metrics::get_histogram(fruName, propertyName, propertyDescription);
 }
 
@@ -106,16 +110,17 @@ void MetricsHistogram::Log()
 class MetricsObservableGauge : public IMetricsLogger
 	{
 		public:
-			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription,  opentelemetry::metrics::ObservableCallbackPtr callback);
+			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription,  opentelemetry::metrics::ObservableCallbackPtr callback, std::string metrics_url);
 	
 			~MetricsObservableGauge();
 	
 			void Log();
 	};
 
-MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::metrics::ObservableCallbackPtr callback)
+MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::metrics::ObservableCallbackPtr callback, std::string metrics_url)
 {
-	otel_metrics::InitMetrics(fruName);
+	exporter_options.url = metrics_url;
+	otel_metrics::InitMetrics(fruName, exporter_options);
 	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, callback);
 }
 
@@ -134,16 +139,17 @@ void MetricsObservableGauge::Log()
 class MetricsUpDownCounter : public IMetricsLogger
 	{
 		public:
-			MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription);
+			MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsUpDownCounter();
 	
 			void Log();
 	};
 
-MetricsUpDownCounter::MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
+MetricsUpDownCounter::MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
-	otel_metrics::InitMetrics(fruName);
+	exporter_options.url = metrics_url;
+	otel_metrics::InitMetrics(fruName, exporter_options);
 	updowncounter = otel_metrics::get_updowncounter(fruName, propertyName, propertyDescription);
 }
 
@@ -166,16 +172,17 @@ void MetricsUpDownCounter::Log()
 class MetricsObservableUpDownCounter : public IMetricsLogger
 	{
 		public:
-			MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription);
+			MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
 	
 			~MetricsObservableUpDownCounter();
 	
 			void Log();
 	};
 
-MetricsObservableUpDownCounter::MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription)
+MetricsObservableUpDownCounter::MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
 {
-	otel_metrics::InitMetrics(fruName);
+	exporter_options.url = metrics_url;
+	otel_metrics::InitMetrics(fruName, exporter_options);
 	observableupdowncounter = otel_metrics::get_observableupdowncounter(fruName, propertyName, propertyDescription);
 }
 
