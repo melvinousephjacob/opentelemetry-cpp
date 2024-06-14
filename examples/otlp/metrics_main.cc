@@ -17,7 +17,7 @@ int main()
 
   for (uint32_t i = 0; i < 20; ++i)
   {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
   }
 
   auto updowncounter = new MetricsUpDownCounter("Sample_UpDownCounter", "Sample_Property_Name", "This is a sample up down counter", metrics_exporter_url);
