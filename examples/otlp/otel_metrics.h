@@ -248,7 +248,7 @@ nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std
 
 nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablegauge(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
+  std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
   auto double_observablegauge                         = meter->CreateDoubleObservableGauge(counter_name, propertyDescription);
