@@ -238,7 +238,7 @@ nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observableco
 
 nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std::string fruName, std::string propertyName, std::string propertyDescription)
 {
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
+  std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
   auto int_histogram                         = meter->CreateUInt64Histogram(counter_name, propertyDescription);
