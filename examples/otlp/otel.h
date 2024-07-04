@@ -133,6 +133,12 @@ nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string 
     return provider->GetLogger(_loggerName, "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Namespace", _nameSpace}, {"ClassName", _className}}));
   }
 
+nostd::shared_ptr<logs::Logger> get_logger(std::string filename)
+  {
+    auto provider = logs::Provider::GetLoggerProvider();
+    return provider->GetLogger("DeviceInfo", "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Filename", filename}}));
+  }
+
   nostd::shared_ptr<trace_api::Tracer> get_tracer(std::string _moduleName)
   {
     auto provider = trace::Provider::GetTracerProvider();
