@@ -1,5 +1,7 @@
 #include "otel.h"
 #include "iloggingserver.h"
+#include "ideviceinfo.h"
+
 namespace logging
 {
 	std::string _moduleName;
@@ -77,4 +79,30 @@ namespace logging
 		CentralLogServer::LogWithSeverity(logger, severity, mymap, message);
 	}
 
+	class DeviceInfo : public IDeviceInfo
+	{
+		public:
+			DeviceInfo(std::filename, std::string endpoint_url);
+	
+			~DeviceInfo();
+	
+			void Log(std::string info);
+	};
+
+	DeviceInfo::DeviceInfo(std::filename, std::string endpoint_url)
+	{
+		logger_opts.url = endpoint_url;
+		otel::InitLogger(logger_opts);
+		logger = otel::get_logger(filename);
+	}
+
+	DeviceInfo::~DeviceInfo()
+	{
+		otel::CleanupLogger();
+	}
+
+	void DeviceInfo::Log(std::string info)
+	{
+		logger->Info(info);
+	}
 }  // namespace
