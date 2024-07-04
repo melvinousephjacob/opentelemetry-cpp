@@ -89,7 +89,7 @@ namespace logging
 			void Log(std::string info);
 	};
 
-	DeviceInfo::DeviceInfo(std::filename, std::string endpoint_url)
+	DeviceInfo::DeviceInfo(std::string filename, std::string endpoint_url)
 	{
 		logger_opts.url = endpoint_url;
 		otel::InitLogger(logger_opts);
