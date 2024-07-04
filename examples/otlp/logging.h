@@ -82,7 +82,7 @@ namespace logging
 	class DeviceInfo : public IDeviceInfo
 	{
 		public:
-			DeviceInfo(std::filename, std::string endpoint_url);
+			DeviceInfo(std::string filename, std::string endpoint_url);
 	
 			~DeviceInfo();
 	
