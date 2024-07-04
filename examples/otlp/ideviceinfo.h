@@ -4,5 +4,5 @@
 class IDeviceInfo
 {
     public:
-        void Log(std::string filename, std::string info);
+        void Log(std::string info);
 };
