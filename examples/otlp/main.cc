@@ -8,7 +8,7 @@ int main()
   std::string trace_endpoint_url  = "http://opentelemetry-collector-lwshost:4318/v1/traces";
   std::string log_endpoint_url = "http://opentelemetry-collector-lwshost:4318/v1/logs";
   
-  auto centralLogServer1 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1", log_endpoint_url);
+  /*auto centralLogServer1 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1", log_endpoint_url);
   auto centralLogServer2 = new logging::CentralLogServer("Logger #1", "Sample Namespace #2", "Sample Classname #2", log_endpoint_url);
   auto centralLogServer3 = new logging::CentralLogServer("Logger #1", "Sample Namespace #1", "Sample Classname #1", log_endpoint_url);
   
@@ -20,5 +20,8 @@ int main()
   TraceData traceData;
   traceData.AdditionalInfo = "This is some additional info.";
   traceData.DateTime = std::time(0);
-  traceLogger->TraceInfo("This is a sample trace message", traceData);
+  traceLogger->TraceInfo("This is a sample trace message", traceData);*/
+
+  auto deviceinfologger = new logging::DeviceInfo("Sample file name", log_endpoint_url);
+  deviceinfologger->Log("Sample info");
 }
