@@ -1,198 +1,62 @@
 
 #include "otel_metrics.h"
+#include <vector>
 
 namespace
 {
-  opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options;
-  nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> counter;
-  nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> observablecounter;
   nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> histogram;
   nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> observablegauge;
-  nostd::unique_ptr<opentelemetry::metrics::UpDownCounter<int64_t>> updowncounter;
-  nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> observableupdowncounter;
-
-  ///////////////////////////////////////////////COUNTER/////////////////////////////////////////
-  class MetricsCounter : public IMetricsLogger
-	{
-		public:
-			MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
-	
-			~MetricsCounter();
-	
-			void Log();
-	};
-
-MetricsCounter::MetricsCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
-{
-	exporter_options.url = metrics_url;
-	otel_metrics::InitMetrics(fruName, exporter_options);
-	counter = otel_metrics::get_counter(fruName, propertyName, propertyDescription);
-}
-
-MetricsCounter::~MetricsCounter()
-{
-	otel_metrics::CleanupMetrics();
-}
-
-void MetricsCounter::Log()
-{
-	for (uint32_t i = 0; i < 20; ++i)
-  	{
-		counter->Add(1);
-    	  	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  	}
-}
-
-///////////////////////////////////////////////OBSERVABLE COUNTER/////////////////////////////////////////
-class MetricsObservableCounter : public IMetricsLogger
-	{
-		public:
-			MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
-	
-			~MetricsObservableCounter();
-	
-			void Log();
-	};
-
-MetricsObservableCounter::MetricsObservableCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
-{
-	exporter_options.url = metrics_url;
-	otel_metrics::InitMetrics(fruName, exporter_options);
-	observablecounter = otel_metrics::get_observablecounter(fruName, propertyName, propertyDescription);
-}
-
-MetricsObservableCounter::~MetricsObservableCounter()
-{
-	otel_metrics::CleanupMetrics();
-}
-
-void MetricsObservableCounter::Log()
-{
-	
-}
-
 
 ///////////////////////////////////////////////HISTOGRAM/////////////////////////////////////////
-class MetricsHistogram : public IMetricsLogger
+class HistogramLogger : public IHistogramLogger
 	{
 		public:
-			MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
+			HistogramLogger(std::string fruName, std::string propertyName, unsigned int historyLength, unsigned int numberOfBins, unsigned int binWidth, int min, int max, std::string siUnit);
 	
-			~MetricsHistogram();
+			~HistogramLogger();
 	
-			void Log();
+			void LogData(std::vector<long> histogramData);
 	};
 
-MetricsHistogram::MetricsHistogram(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
+HistogramLogger::HistogramLogger(std::string fruName, std::string propertyName, unsigned int historyLength, unsigned int numberOfBins, unsigned int binWidth, int min, int max, std::string siUnit)
 {
-	exporter_options.url = metrics_url;
-	otel_metrics::InitMetrics(fruName, exporter_options);
-	histogram = otel_metrics::get_histogram(fruName, propertyName, propertyDescription);
+	otel_metrics::InitMetrics(fruName);
+	histogram = otel_metrics::get_histogram(fruName, propertyName, historyLength, numberOfBins, binWidth, min, max, siUnit);
 }
 
-MetricsHistogram::~MetricsHistogram()
+HistogramLogger::~HistogramLogger()
 {
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsHistogram::Log()
+void HistogramLogger::LogData(std::vector<long> histogramData)
 {
 	auto context           = opentelemetry::context::Context{};
-	for (uint32_t i = 0; i < 20; ++i)
+	for (auto& i: histogramData)
   	{
-		histogram->Record(25, context);
+		histogram->Record(i, context);
     	  	std::this_thread::sleep_for(std::chrono::milliseconds(500));
   	}
 }
-
 
 ///////////////////////////////////////////////OBSERVABLE GAUGE/////////////////////////////////////////
-class MetricsObservableGauge : public IMetricsLogger
+class DevicePropertyLogger : public IDevicePropertyLogger
 	{
 		public:
-			MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription,  opentelemetry::metrics::ObservableCallbackPtr callback, std::string metrics_url);
+			DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback);
 	
-			~MetricsObservableGauge();
-	
-			void Log();
+			~DevicePropertyLogger();
 	};
 
-MetricsObservableGauge::MetricsObservableGauge(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::metrics::ObservableCallbackPtr callback, std::string metrics_url)
+DevicePropertyLogger::DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
-	exporter_options.url = metrics_url;
-	otel_metrics::InitMetrics(fruName, exporter_options);
-	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, callback);
+	otel_metrics::InitMetrics(fruName);
+	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, historyL, timeStampProvided, callback);
 }
 
-MetricsObservableGauge::~MetricsObservableGauge()
+DevicePropertyLogger::~DevicePropertyLogger()
 {
 	otel_metrics::CleanupMetrics();
 }
 
-void MetricsObservableGauge::Log()
-{
-	
-}
-
-
-///////////////////////////////////////////////UP DOWN COUNTER/////////////////////////////////////////
-class MetricsUpDownCounter : public IMetricsLogger
-	{
-		public:
-			MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
-	
-			~MetricsUpDownCounter();
-	
-			void Log();
-	};
-
-MetricsUpDownCounter::MetricsUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
-{
-	exporter_options.url = metrics_url;
-	otel_metrics::InitMetrics(fruName, exporter_options);
-	updowncounter = otel_metrics::get_updowncounter(fruName, propertyName, propertyDescription);
-}
-
-MetricsUpDownCounter::~MetricsUpDownCounter()
-{
-	otel_metrics::CleanupMetrics();
-}
-
-void MetricsUpDownCounter::Log()
-{
-	for (uint32_t i = 0; i < 20; ++i)
-  	{
-		updowncounter->Add(2);
-    	  	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  	}
-}
-
-
-///////////////////////////////////////////////OBSERVABLE UP DOWN COUNTER/////////////////////////////////////////
-class MetricsObservableUpDownCounter : public IMetricsLogger
-	{
-		public:
-			MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url);
-	
-			~MetricsObservableUpDownCounter();
-	
-			void Log();
-	};
-
-MetricsObservableUpDownCounter::MetricsObservableUpDownCounter(std::string fruName, std::string propertyName, std::string propertyDescription, std::string metrics_url)
-{
-	exporter_options.url = metrics_url;
-	otel_metrics::InitMetrics(fruName, exporter_options);
-	observableupdowncounter = otel_metrics::get_observableupdowncounter(fruName, propertyName, propertyDescription);
-}
-
-MetricsObservableUpDownCounter::~MetricsObservableUpDownCounter()
-{
-	otel_metrics::CleanupMetrics();
-}
-
-void MetricsObservableUpDownCounter::Log()
-{
-	
-}
 }
