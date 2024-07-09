@@ -40,7 +40,7 @@ void HistogramLogger::LogData(std::vector<long> histogramData)
 }
 
 ///////////////////////////////////////////////OBSERVABLE GAUGE/////////////////////////////////////////
-class DevicePropertyLogger : public IDevicePropertyLogger
+class DevicePropertyLogger
 	{
 		public:
 			DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback);
