@@ -57,7 +57,7 @@
 #include <chrono>
 #include <thread>
 
-#include "imetricslogger.h"
+#include "ihistogramlogger.h"
 #include <chrono>
 #include <map>
 #include <memory>
