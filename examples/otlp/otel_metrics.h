@@ -96,8 +96,10 @@ namespace internal_log = opentelemetry::sdk::common::internal_log;
 
 namespace otel_metrics
 {
-void InitMetrics(const std::string &name, opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options)
+void InitMetrics(const std::string &name)
 {
+  opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options;
+  exporter_options.url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
   auto exporter = opentelemetry::exporter::otlp::OtlpHttpMetricExporterFactory::Create(exporter_options);
 
   std::string version{"1.2.0"};
@@ -209,44 +211,17 @@ public:
 };
 double MeasurementFetcher::value_ = 0.0;
 
-nostd::unique_ptr<opentelemetry::metrics::Counter<uint64_t>> get_counter(std::string fruName, std::string propertyName, std::string propertyDescription)
-{
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
-  auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
-  auto int_counter                         = meter->CreateUInt64Counter(counter_name, propertyDescription);
-
-  return int_counter;
-}
-
-nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablecounter(std::string fruName, std::string propertyName, std::string propertyDescription)
-{
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
-  auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
-  auto double_observablecounter                         = meter->CreateDoubleObservableCounter(counter_name, propertyDescription);
-
-  double_observablecounter->AddCallback(MeasurementFetcher::Fetcher, nullptr);
-
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  }
-
-  return double_observablecounter;
-}
-
-nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std::string fruName, std::string propertyName, std::string propertyDescription)
+nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std::string fruName, std::string propertyName, unsigned int historyLength, unsigned int numberOfBins, unsigned int binWidth, int min, int max, std::string siUnit)
 {
   std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
-  auto int_histogram                         = meter->CreateUInt64Histogram(counter_name, propertyDescription);
+  auto int_histogram                         = meter->CreateUInt64Histogram(counter_name);
 
   return int_histogram;
 }
 
-nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablegauge(std::string fruName, std::string propertyName, std::string propertyDescription, opentelemetry::metrics::ObservableCallbackPtr callback)
+nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablegauge(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
   std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
   auto provider                               = metrics_api::Provider::GetMeterProvider();
@@ -256,33 +231,6 @@ nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablega
   double_observablegauge->AddCallback(callback, nullptr);
 
   return double_observablegauge;
-}
-
-nostd::unique_ptr<opentelemetry::metrics::UpDownCounter<int64_t>> get_updowncounter(std::string fruName, std::string propertyName, std::string propertyDescription)
-{
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
-  auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
-  auto int_updowncounter                         = meter->CreateInt64UpDownCounter(counter_name, propertyDescription);
-
-  return int_updowncounter;
-}
-
-nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observableupdowncounter(std::string fruName, std::string propertyName, std::string propertyDescription)
-{
-  std::string counter_name                    = fruName + "_" + propertyName + "_counter";
-  auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0");
-  auto double_observableupdowncounter                         = meter->CreateDoubleObservableUpDownCounter(counter_name, propertyDescription);
-
-  double_observableupdowncounter->AddCallback(MeasurementFetcher::Fetcher, nullptr);
-
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  }
-
-  return double_observableupdowncounter;
 }
 
 }
