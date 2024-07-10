@@ -1,7 +1,6 @@
 
 #include <string>
 #include <vector>
-#include <long>
 
 class IHistogramLogger
 {
