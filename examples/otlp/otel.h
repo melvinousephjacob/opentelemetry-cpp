@@ -12,7 +12,6 @@
 #include "opentelemetry/sdk/trace/tracer_provider_factory.h"
 #include "opentelemetry/trace/provider.h"
 #include "iloggingserver.h"
-#include "imetricslogger.h"
 #include <map>
 #include <string>
 #include "opentelemetry/logs/provider.h"
