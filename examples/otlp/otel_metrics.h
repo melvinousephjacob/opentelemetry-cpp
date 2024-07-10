@@ -213,7 +213,7 @@ double MeasurementFetcher::value_ = 0.0;
 
 nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std::string fruName, std::string propertyName, unsigned int historyLength, unsigned int numberOfBins, unsigned int binWidth, int min, int max, std::string siUnit)
 {
-  std::string arrtibutes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ ", HistoryLength: " +historyLength+ ", NumberOfBins: " +numberOfBins+ ", BinWidth: " +binWidth+ ", Min: " +min+ ", Max: " +max;
+  std::string arrtibutes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ ", HistoryLength: " +std::to_string(historyLength)+ ", NumberOfBins: " +numberOfBins+ ", BinWidth: " +binWidth+ ", Min: " +min+ ", Max: " +max;
   std::string name                    = "MR_OTEL_Histogram";
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0");
@@ -224,7 +224,7 @@ nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std
 
 nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablegauge(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
-  std::string attributes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ "PropertyDescription: " +propertyDescription+ ", HistoryLength: " +historyL+ ", TimeStampProvided: " +timeStampProvided;
+  std::string attributes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ "PropertyDescription: " +propertyDescription+ ", HistoryLength: " +std::to_string(historyL)+ ", TimeStampProvided: " +timeStampProvided;
   std::string name                    = "MR_OTEL_DeviceProperty";
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0");
