@@ -4,7 +4,7 @@
 
 int main()
 {
-  auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher, metrics_exporter_url);
+  auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher);
 
   for (uint32_t i = 0; i < 20; ++i)
   {
