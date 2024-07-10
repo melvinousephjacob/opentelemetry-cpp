@@ -213,20 +213,20 @@ double MeasurementFetcher::value_ = 0.0;
 
 nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std::string fruName, std::string propertyName, unsigned int historyLength, unsigned int numberOfBins, unsigned int binWidth, int min, int max, std::string siUnit)
 {
-  std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
+  std::string name                    = "MR_OTEL_Histogram";
   auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0", "", {{"HistoryLength", historyLength}, {"NumberOfBins", numberOfBins}, {"BinWidth", binWidth}, {"Min", min}, {"Max", max}, {"SIUnit", siUnit}});
-  auto int_histogram                         = meter->CreateUInt64Histogram(counter_name);
+  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0", "", {{"FRUName", fruName}, {"PropertyName", propertyName}, {"HistoryLength", historyLength}, {"NumberOfBins", numberOfBins}, {"BinWidth", binWidth}, {"Min", min}, {"Max", max}, {"SIUnit", siUnit}});
+  auto int_histogram                         = meter->CreateUInt64Histogram(name);
 
   return int_histogram;
 }
 
 nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablegauge(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
-  std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
+  std::string name                    = "MR_OTEL_DeviceProperty";
   auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0", "", {{"HistoryLength", historyL}, {"TimeStampProvided", timeStampProvided}});
-  auto double_observablegauge                         = meter->CreateDoubleObservableGauge(counter_name, propertyDescription);
+  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0", "", {{"FRUName", fruName}, {"PropertyName", propertyName}, {"HistoryLength", historyL}, {"TimeStampProvided", timeStampProvided}});
+  auto double_observablegauge                         = meter->CreateDoubleObservableGauge(name, propertyDescription);
 
   double_observablegauge->AddCallback(callback, nullptr);
 
