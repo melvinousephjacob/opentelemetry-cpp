@@ -224,7 +224,7 @@ nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std
 
 nostd::shared_ptr<opentelemetry::metrics::ObservableInstrument> get_observablegauge(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback)
 {
-  std::string attributes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ "PropertyDescription: " +propertyDescription+ ", HistoryLength: " +std::to_string(historyL)+ ", TimeStampProvided: " +std::to_string(timeStampProvided);
+  std::string attributes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ ", PropertyDescription: " +propertyDescription+ ", HistoryLength: " +std::to_string(historyL)+ ", TimeStampProvided: " +std::to_string(timeStampProvided);
   std::string name                    = "MR_OTEL_DeviceProperty";
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0");
