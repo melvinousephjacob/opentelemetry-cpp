@@ -6,5 +6,5 @@
 class IHistogramLogger
 {
     public:
-        void LogData(std::vector<std::long> histogramData);
+        void LogData(std::vector<long> histogramData);
 };
