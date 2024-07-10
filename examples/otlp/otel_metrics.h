@@ -215,7 +215,7 @@ nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std
 {
   std::string counter_name                    = "MR_OTEL_AppMetrics_" + fruName + "_" + propertyName;
   auto provider                               = metrics_api::Provider::GetMeterProvider();
-  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0", "", opentelemetry::common::MakeAttributes({{"HistoryLength", historyLength}, {"NumberOfBins", numberOfBins}, {"BinWidth", binWidth}, {"Min", min}, {"Max", max}, {"SIUnit", siUnit}));
+  nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(fruName, "1.2.0", "", opentelemetry::common::MakeAttributes({{"HistoryLength", historyLength}, {"NumberOfBins", numberOfBins}, {"BinWidth", binWidth}, {"Min", min}, {"Max", max}, {"SIUnit", siUnit}}));
   auto int_histogram                         = meter->CreateUInt64Histogram(counter_name);
 
   return int_histogram;
