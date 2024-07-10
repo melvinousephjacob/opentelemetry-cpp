@@ -213,7 +213,7 @@ double MeasurementFetcher::value_ = 0.0;
 
 nostd::unique_ptr<opentelemetry::metrics::Histogram<uint64_t>> get_histogram(std::string fruName, std::string propertyName, unsigned int historyLength, unsigned int numberOfBins, unsigned int binWidth, int min, int max, std::string siUnit)
 {
-  std::string arrtibutes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ ", HistoryLength: " +std::to_string(historyLength)+ ", NumberOfBins: " +numberOfBins+ ", BinWidth: " +binWidth+ ", Min: " +min+ ", Max: " +max;
+  std::string attributes = "FRUName: " +fruName+ ", PropertyName: " +propertyName+ ", HistoryLength: " +std::to_string(historyLength)+ ", NumberOfBins: " +std::to_string(numberOfBins)+ ", BinWidth: " +std::to_string(binWidth)+ ", Min: " +std::to_string(min)+ ", Max: " +std::to_string(max);
   std::string name                    = "MR_OTEL_Histogram";
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0");
