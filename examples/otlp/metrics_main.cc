@@ -7,6 +7,8 @@ int main()
   auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher);
 
   observableGauge->Log();
+
+  observableGauge->Log();
   
   /*for (uint32_t i = 0; i < 20; ++i)
   {
@@ -24,4 +26,6 @@ int main()
   //histogram_example.join();
   std::vector<long> data{ 10,11,12,13,14,16 };
   histogram->LogData(data);
+
+  observableGauge->Log();
 }
