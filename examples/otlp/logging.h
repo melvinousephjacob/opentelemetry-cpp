@@ -12,7 +12,7 @@ namespace logging
 	class CentralLogServer : public ICentralLogServer
 	{
 		public:
-			CentralLogServer(std::string loggerName, std::string nameSpace, std::string className, std::string endpoint_url);
+			CentralLogServer(std::string loggerName, std::string nameSpace, std::string className);
 	
 			~CentralLogServer();
 	
@@ -23,10 +23,9 @@ namespace logging
 			void LogWithSeverity(nostd::shared_ptr<logs::Logger> logger, Severity severity, std::unordered_map<std::string, std::string> mymap, std::string message);
 	};
 	
-	CentralLogServer::CentralLogServer(std::string loggerName, std::string nameSpace, std::string className, std::string endpoint_url)
+	CentralLogServer::CentralLogServer(std::string loggerName, std::string nameSpace, std::string className)
 	{
-		logger_opts.url = endpoint_url;
-		otel::InitLogger(logger_opts);
+		otel::InitLogger();
 		logger = otel::get_logger(loggerName, nameSpace, className);
 	}
 	
@@ -82,17 +81,16 @@ namespace logging
 	class DeviceInfo : public IDeviceInfo
 	{
 		public:
-			DeviceInfo(std::string filename, std::string endpoint_url);
+			DeviceInfo(std::string filename);
 	
 			~DeviceInfo();
 	
 			void Log(std::string info);
 	};
 
-	DeviceInfo::DeviceInfo(std::string filename, std::string endpoint_url)
+	DeviceInfo::DeviceInfo(std::string filename)
 	{
-		logger_opts.url = endpoint_url;
-		otel::InitLogger(logger_opts);
+		otel::InitLogger();
 		logger = otel::get_logger(filename);
 	}
 
