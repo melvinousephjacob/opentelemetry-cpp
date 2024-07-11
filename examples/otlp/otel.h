@@ -72,9 +72,10 @@ namespace internal_log = opentelemetry::sdk::common::internal_log;
 
 namespace otel
 {
-//opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts;
-void InitTracer(opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts)
+opentelemetry::exporter::otlp::OtlpHttpExporterOptions trace_opts;
+void InitTracer()
 {
+  trace_opts.url = "http://opentelemetry-collector-lwshost:4318/v1/traces";
   std::cout << "Using " << trace_opts.url << " to export trace spans." << std::endl;
   // Create OTLP exporter instance
   auto exporter  = otlp::OtlpHttpExporterFactory::Create(trace_opts);
@@ -102,7 +103,7 @@ void CleanupTracer()
 opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
 void InitLogger()
 {
-  logger_opts.url = "";
+  logger_opts.url = "http://opentelemetry-collector-lwshost:4318/v1/logs";
   std::cout << "Using " << logger_opts.url << " to export log records." << std::endl;
   logger_opts.console_debug = true;
   // Create OTLP exporter instance
