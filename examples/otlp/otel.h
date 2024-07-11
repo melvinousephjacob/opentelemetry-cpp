@@ -131,13 +131,13 @@ void CleanupLogger()
 nostd::shared_ptr<logs::Logger> get_logger(std::string _loggerName, std::string _nameSpace, std::string _className)
   {
     auto provider = logs::Provider::GetLoggerProvider();
-    return provider->GetLogger(_loggerName, "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Namespace", _nameSpace}, {"ClassName", _className}}));
+    return provider->GetLogger(_loggerName, "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Namespace", _nameSpace}, {"ClassName", _className}, {"LogType", "MR_OTEL_CentralLog"}}));
   }
 
 nostd::shared_ptr<logs::Logger> get_logger(std::string filename)
   {
     auto provider = logs::Provider::GetLoggerProvider();
-    return provider->GetLogger("DeviceInfo", "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Filename", filename}}));
+    return provider->GetLogger("DeviceInfo", "Module Name", "1.0", "", opentelemetry::common::MakeAttributes({{"Filename", filename}, {"LogType", "MR_OTEL_DeviceInfo"}}));
   }
 
   nostd::shared_ptr<trace_api::Tracer> get_tracer(std::string _moduleName)
