@@ -61,7 +61,7 @@ DevicePropertyLogger::~DevicePropertyLogger()
 	otel_metrics::CleanupMetrics();
 }
 
-DevicePropertyLogger::Log()
+void DevicePropertyLogger::Log()
 {
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
