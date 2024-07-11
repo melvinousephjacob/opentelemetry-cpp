@@ -99,9 +99,10 @@ void CleanupTracer()
   trace::Provider::SetTracerProvider(none);
 }
 
-//opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
-void InitLogger(opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts)
+opentelemetry::exporter::otlp::OtlpHttpLogRecordExporterOptions logger_opts;
+void InitLogger()
 {
+  logger_opts.url = "";
   std::cout << "Using " << logger_opts.url << " to export log records." << std::endl;
   logger_opts.console_debug = true;
   // Create OTLP exporter instance
