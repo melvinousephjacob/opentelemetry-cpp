@@ -10,7 +10,7 @@ namespace traces
 	class TraceLogger : public ITraceLogger
 	{
 		public:
-			TraceLogger(std::string moduleName, std::string endpoint_url);
+			TraceLogger(std::string moduleName);
 	
 			~TraceLogger();
 	
@@ -22,10 +22,9 @@ namespace traces
 		        void TraceVerbose(std::string message, std::exception exception);
 	};
 	
-	TraceLogger::TraceLogger(std::string moduleName, std::string endpoint_url)
+	TraceLogger::TraceLogger(std::string moduleName)
 	{
-		trace_opts.url = endpoint_url;
-		otel::InitTracer(trace_opts);
+		otel::InitTracer();
 		_moduleName = moduleName;
 	}
 	
