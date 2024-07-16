@@ -22,6 +22,6 @@ int main()
   traceData.DateTime = std::time(0);
   traceLogger->TraceInfo("This is a sample trace message", traceData);*/
 
-  auto deviceinfologger = new logging::DeviceInfo("Sample file name");
+  auto deviceinfologger = new logging::DeviceInfo("Sample_file_name");
   deviceinfologger->Log("Sample info");
 }
