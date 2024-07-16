@@ -24,4 +24,6 @@ int main()
 
   auto deviceinfologger = new logging::DeviceInfo("Sample_file_name");
   deviceinfologger->Log("Sample info");
+  deviceinfologger->Log("More sample info");
+  deviceinfologger->Log("Even more sample info");
 }
