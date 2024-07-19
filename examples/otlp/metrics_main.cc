@@ -21,13 +21,6 @@ int main()
   {
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
-
-  std::cout<<"Before while loop";
-  while(true)
-    {
-    }
-
-  std::cout<<"After while loop";
   //auto histogram = new HistogramLogger("Sample_HistogramLogger", "Sample_Property_Name", 30, 5, 2, 0, 20, "m");
   //metrics::MetricsHistogram y;
   //std::thread counter_example{&foo_library::counter_example, name};
