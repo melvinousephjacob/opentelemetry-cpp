@@ -6,15 +6,23 @@ int main()
 {
   auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher);
 
-  char ch = std::getchar();
   //observableGauge->Log();
 
   //observableGauge->Log();
   
-  /*for (uint32_t i = 0; i < 20; ++i)
+  for (uint32_t i = 0; i < 20; ++i)
   {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  }*/
+  }
+
+  for (uint32_t i = 0; i < 20; ++i)
+  {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  }
+
+  while(true)
+    {
+    }
 
   //auto histogram = new HistogramLogger("Sample_HistogramLogger", "Sample_Property_Name", 30, 5, 2, 0, 20, "m");
   //metrics::MetricsHistogram y;
