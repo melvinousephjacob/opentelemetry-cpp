@@ -6,6 +6,7 @@ int main()
 {
   auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher);
 
+  char ch = std::getchar();
   //observableGauge->Log();
 
   //observableGauge->Log();
