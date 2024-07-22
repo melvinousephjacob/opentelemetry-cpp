@@ -6,7 +6,9 @@ int main()
 {
   auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher, 5000);
 
-  observableGauge->BeginCallbackListen();
+  std::thread observable_gauge{observableGauge->BeginCallbackListen};
+
+  observable_gauge.join();
 
   //auto histogram = new HistogramLogger("Sample_HistogramLogger", "Sample_Property_Name", 30, 5, 2, 0, 20, "m");
   //metrics::MetricsHistogram y;
