@@ -96,7 +96,7 @@ namespace internal_log = opentelemetry::sdk::common::internal_log;
 
 namespace otel_metrics
 {
-void InitMetrics(const std::string &name, int exportInterval)
+void InitMetrics(const std::string &name, int exportInterval = 1000)
 {
   opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options;
   exporter_options.url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
