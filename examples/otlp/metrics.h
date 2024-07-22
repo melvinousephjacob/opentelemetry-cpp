@@ -47,7 +47,7 @@ class DevicePropertyLogger
 	
 			~DevicePropertyLogger();
 
-			void BeginCallbackListen();
+			static void BeginCallbackListen();
 	};
 
 DevicePropertyLogger::DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback, int exportInterval)
@@ -61,7 +61,7 @@ DevicePropertyLogger::~DevicePropertyLogger()
 	otel_metrics::CleanupMetrics();
 }
 
-void DevicePropertyLogger::BeginCallbackListen()
+static void DevicePropertyLogger::BeginCallbackListen()
 {
 	while(true)
 		{
