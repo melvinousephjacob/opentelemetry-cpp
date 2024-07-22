@@ -43,17 +43,17 @@ void HistogramLogger::LogData(std::vector<long> histogramData)
 class DevicePropertyLogger
 	{
 		public:
-			DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback);
+			DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback, int exportInterval);
 	
 			~DevicePropertyLogger();
 
-			void Log();
+			void BeginCallbackListen();
 	};
 
-DevicePropertyLogger::DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback)
+DevicePropertyLogger::DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback, int exportInterval)
 {
 	otel_metrics::InitMetrics(fruName);
-	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, historyL, timeStampProvided, callback);
+	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, historyL, timeStampProvided, callback, exportInterval);
 }
 
 DevicePropertyLogger::~DevicePropertyLogger()
@@ -61,9 +61,11 @@ DevicePropertyLogger::~DevicePropertyLogger()
 	otel_metrics::CleanupMetrics();
 }
 
-void DevicePropertyLogger::Log()
+void DevicePropertyLogger::BeginCallbackListen()
 {
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	while(true)
+		{
+		}
 }
 
 
