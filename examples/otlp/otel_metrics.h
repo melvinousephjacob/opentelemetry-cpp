@@ -96,7 +96,7 @@ namespace internal_log = opentelemetry::sdk::common::internal_log;
 
 namespace otel_metrics
 {
-void InitMetrics(const std::string &name)
+void InitMetrics(const std::string &name, int exportInterval)
 {
   opentelemetry::exporter::otlp::OtlpHttpMetricExporterOptions exporter_options;
   exporter_options.url = "http://opentelemetry-collector-lwshost:4318/v1/metrics";
@@ -107,7 +107,7 @@ void InitMetrics(const std::string &name)
 
   // Initialize and set the global MeterProvider
   metrics_sdk::PeriodicExportingMetricReaderOptions reader_options;
-  reader_options.export_interval_millis = std::chrono::milliseconds(1000);
+  reader_options.export_interval_millis = std::chrono::milliseconds(exportInterval);
   reader_options.export_timeout_millis  = std::chrono::milliseconds(500);
 
   auto reader =
