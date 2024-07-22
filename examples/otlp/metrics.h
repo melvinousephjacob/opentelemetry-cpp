@@ -52,8 +52,8 @@ class DevicePropertyLogger
 
 DevicePropertyLogger::DevicePropertyLogger(std::string fruName, std::string propertyName, std::string propertyDescription, int historyL, bool timeStampProvided, opentelemetry::metrics::ObservableCallbackPtr callback, int exportInterval)
 {
-	otel_metrics::InitMetrics(fruName);
-	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, historyL, timeStampProvided, callback, exportInterval);
+	otel_metrics::InitMetrics(fruName, exportInterval);
+	observablegauge = otel_metrics::get_observablegauge(fruName, propertyName, propertyDescription, historyL, timeStampProvided, callback);
 }
 
 DevicePropertyLogger::~DevicePropertyLogger()
