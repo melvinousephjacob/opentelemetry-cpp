@@ -6,21 +6,8 @@ int main()
 {
   auto observableGauge = new DevicePropertyLogger("Sample_DevicePropertyLogger", "Sample_Property_Name", "This is a sample observable gauge", 30, false, otel_metrics::MeasurementFetcher::Fetcher);
 
-  //observableGauge->Log();
+  observableGauge->Log();
 
-  //observableGauge->Log();
-
-  std::cout<<"Before 1000ms for loop";
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  }
-
-  std::cout<<"Before 500ms for loop";
-  for (uint32_t i = 0; i < 20; ++i)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  }
   //auto histogram = new HistogramLogger("Sample_HistogramLogger", "Sample_Property_Name", 30, 5, 2, 0, 20, "m");
   //metrics::MetricsHistogram y;
   //std::thread counter_example{&foo_library::counter_example, name};
@@ -32,6 +19,4 @@ int main()
   //histogram_example.join();
   //std::vector<long> data{ 10,11,12,13,14,16 };
   //histogram->LogData(data);
-
-  //observableGauge->Log();
 }
