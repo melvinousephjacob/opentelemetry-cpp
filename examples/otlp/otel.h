@@ -7,55 +7,20 @@
 #include "opentelemetry/sdk/logs/logger_provider_factory.h"
 #include "opentelemetry/sdk/logs/processor.h"
 #include "opentelemetry/sdk/logs/simple_log_record_processor_factory.h"
+#include "opentelemetry/sdk/logs/logger_provider.h"
+#include "opentelemetry/sdk/trace/tracer_provider.h"
 #include "opentelemetry/sdk/trace/processor.h"
 #include "opentelemetry/sdk/trace/simple_processor_factory.h"
 #include "opentelemetry/sdk/trace/tracer_provider_factory.h"
 #include "opentelemetry/trace/provider.h"
+#include "opentelemetry/sdk/version/version.h"
 #include "iloggingserver.h"
 #include <map>
 #include <string>
-#include "opentelemetry/logs/provider.h"
-#include "opentelemetry/sdk/version/version.h"
-#include "opentelemetry/trace/provider.h"
 #include <chrono>
 #include <thread>
-
-#include "opentelemetry/exporters/otlp/otlp_http_metric_exporter_factory.h"
-#include "opentelemetry/exporters/otlp/otlp_http_metric_exporter_options.h"
-#include "opentelemetry/metrics/provider.h"
-#include "opentelemetry/sdk/common/global_log_handler.h"
-#include "opentelemetry/sdk/metrics/aggregation/default_aggregation.h"
-#include "opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h"
-#include "opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h"
-#include "opentelemetry/sdk/metrics/meter.h"
-#include "opentelemetry/sdk/metrics/meter_context_factory.h"
-#include "opentelemetry/sdk/metrics/meter_provider.h"
-#include "opentelemetry/sdk/metrics/meter_provider_factory.h"
-#include <chrono>
-#include <map>
 #include <memory>
-#include <thread>
-#include <vector>
-#include "opentelemetry/context/context.h"
-#include "opentelemetry/metrics/provider.h"
-#include "opentelemetry/nostd/shared_ptr.h"
-
-#include <memory>
-#include <thread>
-
-// sdk::TracerProvider and sdk::LoggerProvider is just used to call ForceFlush and prevent to cancel
-// running exportings when destroy and shutdown exporters.It's optional to users.
-#include "opentelemetry/sdk/logs/logger_provider.h"
-#include "opentelemetry/sdk/trace/tracer_provider.h"
-
 #include <iostream>
-#include <string>
-
-#ifdef BAZEL_BUILD
-#  include "examples/common/logs_foo_library/foo_library.h"
-#else
-#  include "logs_foo_library/foo_library.h"
-#endif
 
 namespace trace     = opentelemetry::trace;
 namespace otlp      = opentelemetry::exporter::otlp;
@@ -63,12 +28,7 @@ namespace logs_sdk  = opentelemetry::sdk::logs;
 namespace logs      = opentelemetry::logs;
 namespace trace_sdk = opentelemetry::sdk::trace;
 namespace nostd = opentelemetry::nostd;
-
-namespace metric_sdk    = opentelemetry::sdk::metrics;
 namespace common        = opentelemetry::common;
-namespace metrics_api   = opentelemetry::metrics;
-
-namespace internal_log = opentelemetry::sdk::common::internal_log;
 
 namespace otel
 {
