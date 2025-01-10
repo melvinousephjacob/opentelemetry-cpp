@@ -44,7 +44,7 @@ public:
   using opentelemetry::logs::Logger::EmitLogRecord;
 
   void EmitLogRecord(
-      nostd::unique_ptr<opentelemetry::logs::LogRecord> &&log_record) noexcept override;
+      nostd::unique_ptr<opentelemetry::logs::LogRecord> &&log_record);
 
   /** Returns the associated instrumentation scope */
   const opentelemetry::sdk::instrumentationscope::InstrumentationScope &GetInstrumentationScope()
