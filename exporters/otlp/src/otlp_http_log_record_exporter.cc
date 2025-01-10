@@ -126,7 +126,9 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
 #ifdef ENABLE_ASYNC_EXPORT
   http_client_->Export(*service_request, [log_count](
                                              opentelemetry::sdk::common::ExportResult result) {
-    if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
+      try
+          {
+              if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
     {
       OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                               << log_count << " log(s) error: " << static_cast<int>(result));
@@ -136,12 +138,15 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
     {
       OTEL_INTERNAL_LOG_DEBUG("[OTLP LOG HTTP Exporter] Export " << log_count << " log(s) success");
     }
+          }
     return true;
   });
   return opentelemetry::sdk::common::ExportResult::kSuccess;
 #else
   opentelemetry::sdk::common::ExportResult result = http_client_->Export(*service_request);
-  if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
+    try
+        {
+            if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
   {
     OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                             << log_count << " log(s) error: " << static_cast<int>(result));
@@ -151,6 +156,7 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
   {
     OTEL_INTERNAL_LOG_DEBUG("[OTLP LOG HTTP Exporter] Export " << log_count << " log(s) success");
   }
+        }
   return opentelemetry::sdk::common::ExportResult::kSuccess;
 #endif
 }
