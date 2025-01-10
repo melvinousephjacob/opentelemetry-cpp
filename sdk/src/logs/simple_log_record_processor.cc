@@ -6,6 +6,7 @@
 #include <memory>
 #include <mutex>
 #include <utility>
+#include <stdexcept>
 
 #include "opentelemetry/common/spin_lock_mutex.h"
 #include "opentelemetry/nostd/span.h"
@@ -39,7 +40,7 @@ std::unique_ptr<Recordable> SimpleLogRecordProcessor::MakeRecordable() noexcept
  * Batches the log record it receives in a batch of 1 and immediately sends it
  * to the configured exporter
  */
-void SimpleLogRecordProcessor::OnEmit(std::unique_ptr<Recordable> &&record) noexcept
+void SimpleLogRecordProcessor::OnEmit(std::unique_ptr<Recordable> &&record)
 {
   nostd::span<std::unique_ptr<Recordable>> batch(&record, 1);
   // Get lock to ensure Export() is never called concurrently
@@ -48,6 +49,7 @@ void SimpleLogRecordProcessor::OnEmit(std::unique_ptr<Recordable> &&record) noex
   if (exporter_->Export(batch) != sdk::common::ExportResult::kSuccess)
   {
     /* Alert user of the failed export */
+      throw std::invalid_argument("Export failed: Opentelemetry collector is down.");
   }
 }
 /**
