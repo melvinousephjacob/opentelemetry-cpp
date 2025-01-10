@@ -40,7 +40,7 @@ std::unique_ptr<Recordable> SimpleLogRecordProcessor::MakeRecordable() noexcept
  * Batches the log record it receives in a batch of 1 and immediately sends it
  * to the configured exporter
  */
-void SimpleLogRecordProcessor::OnEmit(std::unique_ptr<Recordable> &&record)
+void SimpleLogRecordProcessor::OnEmit(std::unique_ptr<Recordable> &&record) noexcept
 {
   nostd::span<std::unique_ptr<Recordable>> batch(&record, 1);
   // Get lock to ensure Export() is never called concurrently
