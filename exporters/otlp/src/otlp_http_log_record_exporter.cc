@@ -8,6 +8,7 @@
 #include <ostream>
 #include <string>
 #include <utility>
+#include <stdexcept>
 
 #include "opentelemetry/exporters/otlp/otlp_http_client.h"
 #include "opentelemetry/exporters/otlp/otlp_http_log_record_exporter.h"
@@ -129,7 +130,7 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
     {
       OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                               << log_count << " log(s) error: " << static_cast<int>(result));
-        return opentelemetry::sdk::common::ExportResult::kFailure;
+        throw std::invalid_argument("Export failed: Opentelemetry collector is down.");
     }
     else
     {
@@ -144,7 +145,7 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
   {
     OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                             << log_count << " log(s) error: " << static_cast<int>(result));
-      return opentelemetry::sdk::common::ExportResult::kFailure;
+      throw std::invalid_argument("Export failed: Opentelemetry collector is down.");
   }
   else
   {
