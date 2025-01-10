@@ -88,7 +88,7 @@ opentelemetry::nostd::unique_ptr<opentelemetry::logs::LogRecord> Logger::CreateL
 }
 
 void Logger::EmitLogRecord(
-    opentelemetry::nostd::unique_ptr<opentelemetry::logs::LogRecord> &&log_record) noexcept
+    opentelemetry::nostd::unique_ptr<opentelemetry::logs::LogRecord> &&log_record)
 {
   if (!log_record)
   {
@@ -105,7 +105,14 @@ void Logger::EmitLogRecord(
   // TODO: Sampler (should include check for minSeverity)
 
   // Send the log recordable to the processor
-  processor.OnEmit(std::move(recordable));
+  try
+  {
+   processor.OnEmit(std::move(recordable));   
+  }
+      catch(...)
+      {
+          throw std::invalid_argument("idk");
+      }
 }
 
 const opentelemetry::sdk::instrumentationscope::InstrumentationScope &
