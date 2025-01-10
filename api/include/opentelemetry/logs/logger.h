@@ -307,9 +307,9 @@ public:
       {
     this->EmitLogRecord(severity, format, attributes);
       }
-      catch(...)
+      catch(const std::exception& ex)
       {
-        throw std::invalid_argument("idk girl");
+        throw;
       }
   }
 
@@ -362,9 +362,9 @@ public:
       {
     this->Log(Severity::kDebug, format, attributes);
       }
-      catch(...)
+      catch(const std::exception& ex)
       {
-        throw std::invalid_argument("idk again");
+        throw;
       }
   }
 
