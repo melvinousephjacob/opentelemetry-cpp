@@ -8,6 +8,7 @@
 #include "opentelemetry/nostd/string_view.h"
 #include "opentelemetry/nostd/unique_ptr.h"
 #include "opentelemetry/version.h"
+#include <stdexcept>
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace common
@@ -302,7 +303,14 @@ public:
                    nostd::string_view format,
                    const common::KeyValueIterable &attributes) noexcept
   {
+    try
+      {
     this->EmitLogRecord(severity, format, attributes);
+      }
+      catch(...)
+      {
+        throw std::invalid_argument("idk girl");
+      }
   }
 
   virtual void Log(Severity severity, nostd::string_view message) noexcept
@@ -348,9 +356,16 @@ public:
     this->Log(Severity::kDebug, EventId{event_id}, format, attributes);
   }
 
-  inline void Debug(nostd::string_view format, const common::KeyValueIterable &attributes) noexcept
+  inline void Debug(nostd::string_view format, const common::KeyValueIterable &attributes)
   {
+    try
+      {
     this->Log(Severity::kDebug, format, attributes);
+      }
+      catch(...)
+      {
+        throw std::invalid_argument("idk again");
+      }
   }
 
   inline void Debug(nostd::string_view message) noexcept { this->Log(Severity::kDebug, message); }
