@@ -8,7 +8,6 @@
 #include <ostream>
 #include <string>
 #include <utility>
-#include <stdexcept>
 
 #include "opentelemetry/exporters/otlp/otlp_http_client.h"
 #include "opentelemetry/exporters/otlp/otlp_http_log_record_exporter.h"
@@ -126,37 +125,32 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
 #ifdef ENABLE_ASYNC_EXPORT
   http_client_->Export(*service_request, [log_count](
                                              opentelemetry::sdk::common::ExportResult result) {
-      try
-          {
-              if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
+    
+     if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
     {
       OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                               << log_count << " log(s) error: " << static_cast<int>(result));
-        throw std::invalid_argument("Export failed: Opentelemetry collector is down.");
+        return opentelemetry::sdk::common::ExportResult::kFailure;
     }
     else
     {
       OTEL_INTERNAL_LOG_DEBUG("[OTLP LOG HTTP Exporter] Export " << log_count << " log(s) success");
     }
-          }
     return true;
   });
   return opentelemetry::sdk::common::ExportResult::kSuccess;
 #else
   opentelemetry::sdk::common::ExportResult result = http_client_->Export(*service_request);
-    try
-        {
-            if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
+    if (result != opentelemetry::sdk::common::ExportResult::kSuccess)
   {
     OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                             << log_count << " log(s) error: " << static_cast<int>(result));
-      throw std::invalid_argument("Export failed: Opentelemetry collector is down.");
+      return opentelemetry::sdk::common::ExportResult::kFailure;
   }
   else
   {
     OTEL_INTERNAL_LOG_DEBUG("[OTLP LOG HTTP Exporter] Export " << log_count << " log(s) success");
   }
-        }
   return opentelemetry::sdk::common::ExportResult::kSuccess;
 #endif
 }
