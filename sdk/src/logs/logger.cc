@@ -4,6 +4,7 @@
 #include <chrono>
 #include <string>
 #include <utility>
+#include <stdexcept>
 
 #include "opentelemetry/context/context.h"
 #include "opentelemetry/context/context_value.h"
