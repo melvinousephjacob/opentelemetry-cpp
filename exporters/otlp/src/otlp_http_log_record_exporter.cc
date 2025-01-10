@@ -129,6 +129,7 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
     {
       OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                               << log_count << " log(s) error: " << static_cast<int>(result));
+        return opentelemetry::sdk::common::ExportResult::kFailure;
     }
     else
     {
@@ -143,6 +144,7 @@ opentelemetry::sdk::common::ExportResult OtlpHttpLogRecordExporter::Export(
   {
     OTEL_INTERNAL_LOG_ERROR("[OTLP LOG HTTP Exporter] ERROR: Export "
                             << log_count << " log(s) error: " << static_cast<int>(result));
+      return opentelemetry::sdk::common::ExportResult::kFailure;
   }
   else
   {
