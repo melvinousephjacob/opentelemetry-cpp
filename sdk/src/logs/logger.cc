@@ -89,7 +89,7 @@ opentelemetry::nostd::unique_ptr<opentelemetry::logs::LogRecord> Logger::CreateL
 }
 
 void Logger::EmitLogRecord(
-    opentelemetry::nostd::unique_ptr<opentelemetry::logs::LogRecord> &&log_record)
+    opentelemetry::nostd::unique_ptr<opentelemetry::logs::LogRecord> &&log_record) noexcept
 {
   if (!log_record)
   {
@@ -110,9 +110,9 @@ void Logger::EmitLogRecord(
   {
    processor.OnEmit(std::move(recordable));   
   }
-      catch(...)
+      catch(const std::exception& ex)
       {
-          throw std::invalid_argument("idk");
+          throw;
       }
 }
 
